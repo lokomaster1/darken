@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AppCompatActivity requires a Theme.AppCompat (or MaterialComponents) parent. -->
+    <style name="Theme.Darken" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/background</item>
+    </style>
+</resources>

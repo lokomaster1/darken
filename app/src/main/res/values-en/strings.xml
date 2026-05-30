@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Darken</string>
+    <string name="fgs_special_use_description">Keeps the screen-dimming overlay visible.</string>
+
+    <string name="status_prefix">Status:</string>
+    <string name="status_active">active</string>
+    <string name="status_inactive">inactive</string>
+    <string name="slider_hint">Drag to set dimming intensity.</string>
+    <string name="intensity_value">Dimming intensity: %1$d %%</string>
+    <string name="toggle_on_label">ON</string>
+    <string name="toggle_off_label">OFF</string>
+    <string name="save_default">Save as default</string>
+    <string name="default_saved">Default saved (%1$d %%)</string>
+    <string name="default_hint">Default: %1$d %%</string>
+
+    <string name="exit_app">Exit app</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_behavior">Behavior</string>
+    <string name="settings_auto_start">Auto-enable when opening the app</string>
+    <string name="settings_auto_start_hint">After permissions are set, overlay turns on each time you open Darken.</string>
+    <string name="settings_notifications">Notification</string>
+    <string name="notification_mode_minimal">Minimal (recommended)</string>
+    <string name="notification_interactive_wip">Interactive notification buttons — in development</string>
+    <string name="settings_ok">OK</string>
+    <string name="settings_cancel">Cancel</string>
+    <string name="language_system">System default</string>
+    <string name="language_czech">Čeština</string>
+    <string name="language_english">English</string>
+
+    <string name="manage_permissions">Manage system permissions</string>
+    <string name="permissions_dialog_title">System permissions</string>
+    <string name="permissions_dialog_hint">Tap an item to open settings. Status updates when you return to this screen.</string>
+    <string name="permissions_dialog_close">Close</string>
+    <string name="permission_status_ok">OK</string>
+    <string name="permission_status_needed">needed</string>
+    <string name="permission_app_details">App info</string>
+
+    <string name="permission_overlay_title">Display over other apps</string>
+    <string name="permission_overlay_fallback">If Darken is not in the list, open App info below → Special access → Display over other apps.</string>
+    <string name="permission_overlay_missing">Overlay cannot be enabled yet — allow “Display over other apps” first.</string>
+    <string name="permission_overlay_button">Open overlay settings</string>
+
+    <string name="permission_notification_title">Notifications</string>
+    <string name="permission_notification_body">Required on Android 13+ for the minimal background service icon.</string>
+    <string name="permission_notification_button">Allow notifications</string>
+
+    <string name="permission_battery_title">Unrestricted battery</string>
+    <string name="permission_battery_body">Otherwise the system may stop the dimming service. Recommended on aggressive power-saving phones.</string>
+    <string name="permission_battery_button">Disable battery optimization</string>
+
+    <string name="notification_channel_minimal_name">Dimming service (minimal)</string>
+    <string name="notification_channel_minimal_description">Least visible notification.</string>
+    <string name="notification_channel_interactive_name">Dimming service (interactive)</string>
+    <string name="notification_channel_interactive_description">Control dimming from the notification shade.</string>
+    <string name="notification_channel_name">Dimming service</string>
+    <string name="notification_channel_description">Minimal notification while the overlay runs.</string>
+    <string name="notification_title">Darken is active</string>
+    <string name="notification_text">Overlay is dimming the display</string>
+</resources>

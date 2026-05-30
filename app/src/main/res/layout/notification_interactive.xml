@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="2dp"
+    android:paddingEnd="2dp">
+
+    <TextView
+        android:id="@+id/action_minus5"
+        style="@style/NotificationActionText"
+        android:text="&lt;&lt;" />
+
+    <TextView
+        android:id="@+id/action_minus1"
+        style="@style/NotificationActionText"
+        android:text="&lt;" />
+
+    <TextView
+        android:id="@+id/action_default"
+        style="@style/NotificationActionText"
+        android:text="50%" />
+
+    <TextView
+        android:id="@+id/action_exit"
+        style="@style/NotificationActionText"
+        android:text="X" />
+
+    <TextView
+        android:id="@+id/action_plus1"
+        style="@style/NotificationActionText"
+        android:text="&gt;" />
+
+    <TextView
+        android:id="@+id/action_plus5"
+        style="@style/NotificationActionText"
+        android:text="&gt;&gt;" />
+</LinearLayout>

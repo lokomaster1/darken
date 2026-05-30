@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Darken</string>
+    <string name="fgs_special_use_description">Udržuje na obrazovce překryvnou vrstvu pro dodatečné stmavení displeje.</string>
+
+    <string name="status_prefix">Stav:</string>
+    <string name="status_active">aktivní</string>
+    <string name="status_inactive">neaktivní</string>
+    <string name="slider_hint">Přetáhněte pro nastavení intenzity ztmavení.</string>
+    <string name="intensity_value">Intenzita ztmavení: %1$d %%</string>
+    <string name="toggle_on_label">ZAPNUTO</string>
+    <string name="toggle_off_label">VYPNUTO</string>
+    <string name="save_default">Uložit jako výchozí</string>
+    <string name="default_saved">Výchozí hodnota uložena (%1$d %%)</string>
+    <string name="default_hint">Výchozí: %1$d %%</string>
+
+    <string name="exit_app">Ukončit aplikaci</string>
+
+    <string name="settings_title">Nastavení</string>
+    <string name="settings_language">Jazyk</string>
+    <string name="settings_behavior">Chování</string>
+    <string name="settings_auto_start">Automaticky zapnout při otevření aplikace</string>
+    <string name="settings_auto_start_hint">Po povolení a nastavení oprávnění se překrytí zapne samo při každém otevření Darken.</string>
+    <string name="settings_notifications">Oznámení</string>
+    <string name="notification_mode_minimal">Minimální (doporučeno)</string>
+    <string name="notification_interactive_wip">Interaktivní oznámení s tlačítky — ve vývoji</string>
+    <string name="settings_ok">OK</string>
+    <string name="settings_cancel">Zrušit</string>
+    <string name="language_system">Podle systému</string>
+    <string name="language_czech">Čeština</string>
+    <string name="language_english">English</string>
+
+    <string name="manage_permissions">Spravovat oprávnění systému</string>
+    <string name="permissions_dialog_title">Systémová oprávnění</string>
+    <string name="permissions_dialog_hint">Klepněte na položku pro otevření nastavení. Stav se obnoví po návratu do tohoto okna.</string>
+    <string name="permissions_dialog_close">Zavřít</string>
+    <string name="permission_status_ok">OK</string>
+    <string name="permission_status_needed">potřeba</string>
+    <string name="permission_app_details">Informace o aplikaci</string>
+
+    <string name="permission_overlay_title">Zobrazovat přes ostatní aplikace</string>
+    <string name="permission_overlay_fallback">Pokud Darken ve výběru nevidíte, použijte níže „Informace o aplikaci“ → Speciální přístup → Zobrazovat přes ostatní aplikace.</string>
+    <string name="permission_overlay_missing">Překrytí zatím nelze zapnout — nejdřív povolte „Zobrazovat přes ostatní aplikace“.</string>
+    <string name="permission_overlay_button">Otevřít nastavení překrytí</string>
+
+    <string name="permission_notification_title">Oznámení</string>
+    <string name="permission_notification_body">Od Androidu 13 pro minimální ikonu služby na pozadí.</string>
+    <string name="permission_notification_button">Povolit oznámení</string>
+
+    <string name="permission_battery_title">Bez omezení baterie</string>
+    <string name="permission_battery_body">Systém může jinak službu stmavení ukončit. Doporučeno na telefonech s agresivní úsporou energie.</string>
+    <string name="permission_battery_button">Vyloučit z úspory baterie</string>
+
+    <string name="notification_channel_minimal_name">Služba stmavení (minimální)</string>
+    <string name="notification_channel_minimal_description">Nejméně viditelné oznámení.</string>
+    <string name="notification_channel_interactive_name">Služba stmavení (interaktivní)</string>
+    <string name="notification_channel_interactive_description">Ovládání stmavení z oznamovací roletky.</string>
+    <string name="notification_channel_name">Služba stmavení</string>
+    <string name="notification_channel_description">Minimální oznámení pro běh překryvné vrstvy na pozadí.</string>
+    <string name="notification_title">Darken je aktivní</string>
+    <string name="notification_text">Překrytí stmavuje displej</string>
+</resources>
