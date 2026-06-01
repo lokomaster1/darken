@@ -14,22 +14,35 @@ After a signed release build, the installable file is typically:
 
 This folder is **gitignored** so the APK is not pushed with source code.
 
-## Upload APK to GitHub (when repo is online)
+## GitHub Releases layout (APK files)
 
-1. Create the repository: https://github.com/lokomaster1/darken  
-2. Push tags, e.g. `v1.1` (see README).  
-3. On GitHub: **Releases → Draft a new release**  
-   - Tag: `v1.1`  
-   - Title: `Darken 1.1.0`  
-   - Attach `app-release.apk` (or rename to `darken-1.1.0.apk`)  
-4. Publish the release.
+APK binaries are **not** in the git tree (see `.gitignore`). Each version is published as a **GitHub Release** attached to a tag:
 
-### Command line (optional, requires `gh` login)
+| Git tag   | Suggested APK asset name   | Source version |
+|-----------|----------------------------|----------------|
+| `v1.1.1`  | `darken-1.1.1.apk`         | `versionName` in `app/build.gradle.kts` at that tag |
+| `v1.1.0`  | `darken-1.1.0.apk`         | (older builds, if you still have the APK) |
+
+Older tags (`v1.0`, `v1.0.1`, …) can stay source-only unless you have signed APKs to upload later.
+
+## Upload APK to GitHub
+
+1. Repository: https://github.com/lokomaster1/darken  
+2. Push branch and tags (see README).  
+3. **Releases → Draft a new release**  
+   - Choose tag: `v1.1.1`  
+   - Title: `Darken 1.1.1`  
+   - Attach APK renamed to `darken-1.1.1.apk` (from `app/release/app-release.apk` on your machine)  
+4. Publish.
+
+### Command line (requires [GitHub CLI](https://cli.github.com/) — `gh auth login`)
 
 ```bash
-gh release create v1.1 app/release/app-release.apk \
-  --title "Darken 1.1.0" \
-  --notes "Screen dimming overlay — GPL-3.0, no analytics, no Internet."
+cp app/release/app-release.apk /tmp/darken-1.1.1.apk
+gh release create v1.1.1 /tmp/darken-1.1.1.apk \
+  --repo lokomaster1/darken \
+  --title "Darken 1.1.1" \
+  --notes "Screen dimming overlay. GPL-3.0. No Internet, no analytics."
 ```
 
 ## Before each release

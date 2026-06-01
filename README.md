@@ -51,7 +51,13 @@ AndroidX / Jetpack Compose / DataStore (Apache License 2.0), linked into the app
 
 ## Publishing a release APK
 
-Do **not** commit signing keys or `local.properties`. Upload the APK to **GitHub Releases** when the remote repo exists — steps in [RELEASE.md](RELEASE.md).
+Do **not** commit signing keys or `local.properties`. Upload the APK to **GitHub Releases** — steps in [RELEASE.md](RELEASE.md).
+
+## Development note
+
+Most of this codebase was written with assistance from **[Cursor](https://cursor.com)** (AI-assisted IDE). Thank you to the Cursor team and the models behind it — and thank you for checking out Darken.
+
+The author (**lokomaster1**) owns the project direction, testing, and release; you can audit every line in this repository.
 
 ---
 
@@ -66,3 +72,5 @@ Do **not** commit signing keys or `local.properties`. Upload the APK to **GitHub
 Sestavení: `./gradlew assembleDebug`  
 Soukromí: [PRIVACY.md](PRIVACY.md)  
 APK na GitHub: viz [RELEASE.md](RELEASE.md)
+
+**Vývoj:** většina kódu vznikla s pomocí [Cursor](https://cursor.com) (IDE s AI). Děkuji tvůrcům Cursoru — a děkuji i tobě, že se na projekt díváš.
