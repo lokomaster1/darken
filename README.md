@@ -24,15 +24,11 @@ I couldn’t really find a modern, open-source Android app that does this proper
 - Permission **Display over other apps** (overlay)
 - **Notifications** on Android 13+ (for the service icon)
 
-## Build from source
+## Certificate fingerprint:
 
-```bash
-./gradlew assembleDebug
-```
+SHA256: 19:7F:C8:BF:5A:D8:A8:E9:D0:76:CD:5B:DB:7C:9F:BA:98:32:42:01:BD:8A:5E:30:FC:FD:ED:93:15:F0:85:D7
 
-APK output: `app/build/outputs/apk/debug/app-debug.apk`
 
-Release APK (signed locally): `app/release/app-release.apk` — not committed to git; see [RELEASE.md](RELEASE.md).
 
 ## Privacy
 
@@ -52,6 +48,12 @@ The app does not use the Internet. Overlay permission is powerful; the project i
 ## Known limitations
 
 There are no specific known issues, but due to Android and OEM differences, behavior may vary across devices (especially Samsung UI / HyperOS / heavily customized systems). If you encounter anything unexpected, feedback is welcome — it helps improve compatibility.
+
+
+Security-sensitive apps
+Some security-sensitive apps (such as banking apps, password managers, or authentication/2FA apps) may restrict or block interaction when an overlay is active. This is a security measure on their side to prevent potential screen overlay attacks.
+If you experience unexpected behavior in such apps, try disabling the overlay.
+
 
 ## Third-party libraries
 
