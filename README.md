@@ -51,6 +51,7 @@ Security-sensitive apps
 Some security-sensitive apps (such as banking apps, password managers, or authentication/2FA apps) may restrict or block interaction when an overlay is active. This is a security measure on their side to prevent potential screen overlay attacks.
 If you experience unexpected behavior in such apps, try disabling the overlay.
 
+The app is provided as-is, behavior may vary across devices and Android versions due to system-level differences.
 
 ## Third-party libraries
 
@@ -66,6 +67,7 @@ Code was written with assistance from **[Cursor](https://cursor.com)** (AI-assis
 - **Repository:** https://github.com/lokomaster1/darken  
 - **Contact:** diskus.barge163@simplelogin (dot) com  
 - **License:** [GNU GPL v3.0 or later](LICENSE) — Copyright (C) 2026 lokomaster1
+
 
 ---
 
