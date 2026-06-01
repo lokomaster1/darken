@@ -2,6 +2,10 @@
 
 Free, open-source Android app that dims the screen with a full-screen overlay. No ads, no analytics, no Internet permission.
 
+Why this exists:
+
+I couldn’t really find a modern, open-source Android app that does this properly — something up-to-date, simple, and with all the basic features easily accessible. So I built this for myself as a clean, minimal tool that just does its job without unnecessary complexity.
+
 - **Repository:** https://github.com/lokomaster1/darken  
 - **Contact:** diskus.barge163@simplelogin.com  
 - **License:** [GNU GPL v3.0 or later](LICENSE) — Copyright (C) 2026 lokomaster1
@@ -45,6 +49,10 @@ See [PRIVACY.md](PRIVACY.md). The in-app privacy policy uses the same content (S
 
 The app does not use the Internet. Overlay permission is powerful; the project is fully open source so behavior can be audited.
 
+## Known limitations
+
+There are no specific known issues, but due to Android and OEM differences, behavior may vary across devices (especially Samsung UI / HyperOS / heavily customized systems). If you encounter anything unexpected, feedback is welcome — it helps improve compatibility.
+
 ## Third-party libraries
 
 AndroidX / Jetpack Compose / DataStore (Apache License 2.0), linked into the app binary.
@@ -55,7 +63,7 @@ Do **not** commit signing keys or `local.properties`. Upload the APK to **GitHub
 
 ## Development note
 
-Most of this codebase was written with assistance from **[Cursor](https://cursor.com)** (AI-assisted IDE). Thank you to the Cursor team and the models behind it — and thank you for checking out Darken.
+Code was written with assistance from **[Cursor](https://cursor.com)** (AI-assisted IDE). Thank you to the Cursor team and the models behind it
 
 The author (**lokomaster1**) owns the project direction, testing, and release; you can audit every line in this repository.
 
@@ -73,4 +81,4 @@ Sestavení: `./gradlew assembleDebug`
 Soukromí: [PRIVACY.md](PRIVACY.md)  
 APK na GitHub: viz [RELEASE.md](RELEASE.md)
 
-**Vývoj:** většina kódu vznikla s pomocí [Cursor](https://cursor.com) (IDE s AI). Děkuji tvůrcům Cursoru — a děkuji i tobě, že se na projekt díváš.
+**Vývoj:** Kód vznikal s pomocí [Cursor](https://cursor.com) (IDE s AI). Děkuji tvůrcům Cursoru.
