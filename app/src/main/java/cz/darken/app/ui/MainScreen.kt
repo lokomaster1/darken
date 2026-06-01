@@ -25,8 +25,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
@@ -65,6 +63,12 @@ fun MainScreen(
     onOpenPermissions: () -> Unit,
     onOpenSettings: () -> Unit,
     onExitApp: () -> Unit,
+    colorFilterExpanded: Boolean,
+    onColorFilterExpandedChange: (Boolean) -> Unit,
+    tintPreset: String,
+    resolvedTintArgb: Int,
+    onTintPresetSelected: (String) -> Unit,
+    onCustomTintClick: () -> Unit,
     snackbarMessage: String?,
     onSnackbarShown: () -> Unit,
 ) {
@@ -139,6 +143,16 @@ fun MainScreen(
                     enabled = canDrawOverlays,
                     onDimLevelChange = onDimLevelChange,
                     onSaveDefault = onSaveDefault,
+                )
+
+                ColorFilterCard(
+                    expanded = colorFilterExpanded,
+                    onExpandedChange = onColorFilterExpandedChange,
+                    tintPreset = tintPreset,
+                    resolvedTintArgb = resolvedTintArgb,
+                    enabled = canDrawOverlays,
+                    onPresetSelected = onTintPresetSelected,
+                    onCustomClick = onCustomTintClick,
                 )
             }
 
@@ -286,21 +300,10 @@ private fun ControlCard(
             fontWeight = FontWeight.SemiBold,
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Slider(
-            value = dimLevel.toFloat(),
-            onValueChange = { onDimLevelChange(it.toInt()) },
-            valueRange = PreferencesRepository.MIN_DIM.toFloat()..PreferencesRepository.MAX_DIM.toFloat(),
-            steps = PreferencesRepository.MAX_DIM - 1,
+        DimIntensitySlider(
+            value = dimLevel,
+            onValueChange = onDimLevelChange,
             enabled = enabled,
-            modifier = Modifier.fillMaxWidth(),
-            colors = SliderDefaults.colors(
-                thumbColor = DarkenPalette.Gold,
-                activeTrackColor = DarkenPalette.Gold,
-                inactiveTrackColor = DarkenPalette.NavyTrack,
-                disabledThumbColor = DarkenPalette.GoldDim,
-                disabledActiveTrackColor = DarkenPalette.GoldDim,
-                disabledInactiveTrackColor = DarkenPalette.NavyTrack,
-            ),
         )
         if (hasSavedDefault) {
             Spacer(modifier = Modifier.height(8.dp))

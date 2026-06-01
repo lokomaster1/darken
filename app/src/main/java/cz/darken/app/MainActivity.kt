@@ -3,6 +3,7 @@ package cz.darken.app
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -19,8 +21,11 @@ import androidx.lifecycle.lifecycleScope
 import cz.darken.app.data.PreferencesRepository
 import cz.darken.app.locale.LocaleHelper
 import cz.darken.app.overlay.OverlayService
+import cz.darken.app.overlay.OverlayTint
+import cz.darken.app.ui.CustomColorDialog
 import cz.darken.app.ui.DarkenTheme
 import cz.darken.app.ui.MainScreen
+import cz.darken.app.ui.PrivacyPolicyDialog
 import cz.darken.app.ui.SettingsDialog
 import cz.darken.app.ui.SystemPermissionsDialog
 import cz.darken.app.util.PermissionIntents
@@ -35,6 +40,9 @@ class MainActivity : AppCompatActivity() {
     private var overlayActive = mutableStateOf(false)
     private var showPermissionsDialog = mutableStateOf(false)
     private var showSettingsDialog = mutableStateOf(false)
+    private var showCustomColorDialog = mutableStateOf(false)
+    private var showPrivacyPolicy = mutableStateOf(false)
+    private var colorFilterExpanded = mutableStateOf(false)
     private var permissionRefreshKey = mutableIntStateOf(0)
     private var overlayDisabledByUser = false
 
@@ -50,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         preferences = PreferencesRepository(applicationContext)
 
         overlayDisabledByUser = savedInstanceState?.getBoolean(KEY_OVERLAY_DISABLED_BY_USER, false) ?: false
+        colorFilterExpanded.value = savedInstanceState?.getBoolean(KEY_COLOR_FILTER_EXPANDED, false) ?: false
 
         setContent {
             val defaultDim by preferences.defaultDimLevel.collectAsStateWithLifecycle(
@@ -64,12 +73,27 @@ class MainActivity : AppCompatActivity() {
             val autoStartOnLaunch by preferences.autoStartOnLaunch.collectAsStateWithLifecycle(
                 initialValue = false,
             )
+            val tintPreset by preferences.overlayTintPreset.collectAsStateWithLifecycle(
+                initialValue = OverlayTint.PRESET_GRAY,
+            )
+            val resolvedTintArgb by preferences.resolvedOverlayTintArgb.collectAsStateWithLifecycle(
+                initialValue = OverlayTint.GrayArgb,
+            )
+            val customTintArgb by preferences.customOverlayTintArgb.collectAsStateWithLifecycle(
+                initialValue = OverlayTint.AmberArgb,
+            )
+            val privacyAcknowledged by preferences.privacyAcknowledged.collectAsStateWithLifecycle(
+                initialValue = false,
+            )
             var dimLevel by dimLevelState
             var snackbarMessage by mutableStateOf<String?>(null)
             val overlayOn by overlayActive
             val permissionsOpen by showPermissionsDialog
             val settingsOpen by showSettingsDialog
             val refreshKey by permissionRefreshKey
+            val colorExpanded by colorFilterExpanded
+            var dialogRestorePreset by remember { mutableStateOf(OverlayTint.PRESET_GRAY) }
+            var dialogRestoreArgb by remember { mutableStateOf(OverlayTint.GrayArgb) }
 
             if (permissionsOpen) {
                 @Suppress("UNUSED_VARIABLE")
@@ -101,6 +125,55 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
+            if (showCustomColorDialog.value) {
+                CustomColorDialog(
+                    currentArgb = if (tintPreset == OverlayTint.PRESET_CUSTOM) {
+                        resolvedTintArgb
+                    } else {
+                        customTintArgb
+                    },
+                    onColorApply = { argb ->
+                        lifecycleScope.launch {
+                            preferences.setCustomOverlayTintArgb(argb)
+                            if (overlayOn) {
+                                OverlayService.refreshAppearance(this@MainActivity)
+                            }
+                        }
+                    },
+                    onConfirm = { showCustomColorDialog.value = false },
+                    onDismiss = {
+                        lifecycleScope.launch {
+                            if (dialogRestorePreset == OverlayTint.PRESET_CUSTOM) {
+                                preferences.setCustomOverlayTintArgb(dialogRestoreArgb)
+                            } else {
+                                preferences.setOverlayTintPreset(dialogRestorePreset)
+                            }
+                            if (overlayOn) {
+                                OverlayService.refreshAppearance(this@MainActivity)
+                            }
+                        }
+                        showCustomColorDialog.value = false
+                    },
+                )
+            }
+
+            val showPrivacy = showPrivacyPolicy.value || !privacyAcknowledged
+
+            if (showPrivacy) {
+                PrivacyPolicyDialog(
+                    firstRun = !privacyAcknowledged,
+                    onAccept = {
+                        if (!privacyAcknowledged) {
+                            lifecycleScope.launch {
+                                preferences.setPrivacyAcknowledged(true)
+                            }
+                        }
+                        showPrivacyPolicy.value = false
+                    },
+                    onDismiss = { showPrivacyPolicy.value = false },
+                )
+            }
+
             if (settingsOpen) {
                 SettingsDialog(
                     savedLanguage = appLanguage,
@@ -110,6 +183,9 @@ class MainActivity : AppCompatActivity() {
                         showSettingsDialog.value = false
                     },
                     onDismiss = { showSettingsDialog.value = false },
+                    onOpenPrivacy = { showPrivacyPolicy.value = true },
+                    onOpenGithub = { openGithub() },
+                    onOpenContact = { openContactEmail() },
                 )
             }
 
@@ -147,6 +223,27 @@ class MainActivity : AppCompatActivity() {
                     onOpenPermissions = { showPermissionsDialog.value = true },
                     onOpenSettings = { showSettingsDialog.value = true },
                     onExitApp = { exitAppFully() },
+                    colorFilterExpanded = colorExpanded,
+                    onColorFilterExpandedChange = { colorFilterExpanded.value = it },
+                    tintPreset = tintPreset,
+                    resolvedTintArgb = resolvedTintArgb,
+                    onTintPresetSelected = { preset ->
+                        lifecycleScope.launch {
+                            preferences.setOverlayTintPreset(preset)
+                            if (overlayOn) {
+                                OverlayService.refreshAppearance(this@MainActivity)
+                            }
+                        }
+                    },
+                    onCustomTintClick = {
+                        dialogRestorePreset = tintPreset
+                        dialogRestoreArgb = if (tintPreset == OverlayTint.PRESET_CUSTOM) {
+                            resolvedTintArgb
+                        } else {
+                            customTintArgb
+                        }
+                        showCustomColorDialog.value = true
+                    },
                     snackbarMessage = snackbarMessage,
                     onSnackbarShown = { snackbarMessage = null },
                 )
@@ -157,6 +254,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean(KEY_OVERLAY_DISABLED_BY_USER, overlayDisabledByUser)
+        outState.putBoolean(KEY_COLOR_FILTER_EXPANDED, colorFilterExpanded.value)
     }
 
     override fun onStart() {
@@ -247,6 +345,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun openGithub() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_url)))
+        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    }
+
+    private fun openContactEmail() {
+        val intent = Intent(
+            Intent.ACTION_SENDTO,
+            Uri.parse("mailto:${getString(R.string.contact_email)}"),
+        )
+        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    }
+
     private fun canDrawOverlays(): Boolean = PermissionIntents.canDrawOverlays(this)
 
     private fun notificationsGranted(): Boolean {
@@ -270,5 +381,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val KEY_OVERLAY_DISABLED_BY_USER = "overlay_disabled_by_user"
+        private const val KEY_COLOR_FILTER_EXPANDED = "color_filter_expanded"
     }
 }

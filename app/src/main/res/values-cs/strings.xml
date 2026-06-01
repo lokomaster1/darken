@@ -13,6 +13,14 @@
     <string name="default_saved">Výchozí hodnota uložena (%1$d %%)</string>
     <string name="default_hint">Výchozí: %1$d %%</string>
 
+    <string name="filter_color_title">Barva filtru</string>
+    <string name="tint_gray">Šedá</string>
+    <string name="tint_amber">Hnědá</string>
+    <string name="tint_red">Červená</string>
+    <string name="tint_custom">Vlastní</string>
+    <string name="custom_color_title">Vlastní barva filtru</string>
+    <string name="custom_color_hex_label">Kód barvy (#RRGGBB)</string>
+
     <string name="exit_app">Ukončit aplikaci</string>
 
     <string name="settings_title">Nastavení</string>
@@ -20,9 +28,13 @@
     <string name="settings_behavior">Chování</string>
     <string name="settings_auto_start">Automaticky zapnout při otevření aplikace</string>
     <string name="settings_auto_start_hint">Po povolení a nastavení oprávnění se překrytí zapne samo při každém otevření Darken.</string>
-    <string name="settings_notifications">Oznámení</string>
-    <string name="notification_mode_minimal">Minimální (doporučeno)</string>
-    <string name="notification_interactive_wip">Interaktivní oznámení s tlačítky — ve vývoji</string>
+    <string name="settings_about">O aplikaci</string>
+    <string name="settings_privacy">Zásady ochrany soukromí</string>
+    <string name="settings_privacy_subtitle">Co Darken dělá a nedělá s vašimi daty</string>
+    <string name="settings_github">Zdrojový kód (GitHub)</string>
+    <string name="settings_github_subtitle">https://github.com/darken-app/darken</string>
+    <string name="settings_contact">Kontakt</string>
+    <string name="settings_contact_email">darken.contact@example.com</string>
     <string name="settings_ok">OK</string>
     <string name="settings_cancel">Zrušit</string>
     <string name="language_system">Podle systému</string>
@@ -58,4 +70,23 @@
     <string name="notification_channel_description">Minimální oznámení pro běh překryvné vrstvy na pozadí.</string>
     <string name="notification_title">Darken je aktivní</string>
     <string name="notification_text">Překrytí stmavuje displej</string>
+
+    <string name="privacy_title">Zásady ochrany soukromí</string>
+    <string name="privacy_updated">Poslední aktualizace: květen 2026</string>
+    <string name="privacy_accept">Rozumím</string>
+    <string name="privacy_close">Zavřít</string>
+    <string name="privacy_section_summary_title">Shrnutí</string>
+    <string name="privacy_section_summary_body">Darken je svobodná open-source aplikace pro dodatečné ztmavení displeje překryvem. Nesbírá, neprodává ani nesdílí osobní údaje. Aplikace nemá oprávnění k internetu a nemůže odesílat data z telefonu.</string>
+    <string name="privacy_section_collect_title">Sběr dat</string>
+    <string name="privacy_section_collect_body">Darken nesbírá analytiku, reklamní identifikátory, polohu, kontakty ani jiné osobní informace. V aplikaci nejsou účty, crash reportéry ani monetizační SDK.</string>
+    <string name="privacy_section_storage_title">Údaje uložené v zařízení</string>
+    <string name="privacy_section_storage_body">Nastavení se ukládají pouze lokálně (např. výchozí intenzita, barva filtru, jazyk, automatické zapnutí). Data zůstávají v soukromém úložišti aplikace a nikam se nepřenášejí.</string>
+    <string name="privacy_section_network_title">Síť</string>
+    <string name="privacy_section_network_body">Aplikace nevyžaduje přístup k internetu. Nemůže nahrávat ani stahovat data. Odkazy, které otevřete ručně (např. GitHub nebo e-mail z nastavení), řeší váš prohlížeč nebo poštovní klient mimo Darken.</string>
+    <string name="privacy_section_permissions_title">Oprávnění</string>
+    <string name="privacy_section_permissions_body">Zobrazovat přes ostatní aplikace: nutné pro vykreslení stmavující vrstvy. Oznámení (Android 13+): pouze pro minimální ikonu služby na pozadí při aktivním stmavení. Výjimka z úspory baterie: volitelné doporučení, aby systém službu méně ukončoval. Darken používá jen to, co potřebuje ke stmavení; oprávnění můžete kdykoli změnit v nastavení systému.</string>
+    <string name="privacy_section_third_party_title">Knihovny třetích stran</string>
+    <string name="privacy_section_third_party_body">Aplikace používá standardní open-source knihovny Androidu (např. AndroidX, Jetpack Compose) v APK. Běží lokálně v zařízení a Darken je nepoužívá ke sběru dat.</string>
+    <string name="privacy_section_contact_title">Kontakt a zdrojový kód</string>
+    <string name="privacy_section_contact_body">Dotazy nebo připomínky k soukromí: darken.contact@example.com (zástupný kontakt). Úplný zdrojový kód bude zveřejněn na GitHubu, aby bylo možné tyto zásady ověřit.</string>
 </resources>

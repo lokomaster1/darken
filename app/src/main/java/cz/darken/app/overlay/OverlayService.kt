@@ -44,8 +44,13 @@ class OverlayService : Service() {
                 MainActivityHolder.requestExitApp()
                 return START_NOT_STICKY
             }
-            ACTION_REFRESH_NOTIFICATION -> {
-                refreshNotification()
+            ACTION_REFRESH_NOTIFICATION, ACTION_REFRESH_APPEARANCE -> {
+                if (overlayView != null) {
+                    applyOverlayAppearance()
+                }
+                if (intent?.action == ACTION_REFRESH_NOTIFICATION) {
+                    refreshNotification()
+                }
                 return START_STICKY
             }
             ACTION_UPDATE -> {
@@ -102,19 +107,20 @@ class OverlayService : Service() {
     private fun setDimLevel(dimLevel: Int) {
         currentDimLevel = dimLevel.coerceIn(PreferencesRepository.MIN_DIM, PreferencesRepository.MAX_DIM)
         lastKnownDimLevel = currentDimLevel
-        applyDimLevel(currentDimLevel)
+        applyOverlayAppearance()
         refreshNotification()
     }
 
     private fun showOverlay(dimLevel: Int) {
-        setDimLevel(dimLevel)
+        currentDimLevel = dimLevel.coerceIn(PreferencesRepository.MIN_DIM, PreferencesRepository.MAX_DIM)
+        lastKnownDimLevel = currentDimLevel
 
         val wm = getSystemService<WindowManager>() ?: return
         windowManager = wm
 
         val view = View(this).apply {
-            setBackgroundColor(0xFF000000.toInt())
-            alpha = currentDimLevel / PreferencesRepository.MAX_DIM.toFloat()
+            setBackgroundColor(preferences.resolveOverlayTintArgbBlocking())
+            alpha = OverlayTint.alphaForDimLevel(currentDimLevel)
         }
 
         val params = WindowManager.LayoutParams(
@@ -134,8 +140,10 @@ class OverlayService : Service() {
         overlayView = view
     }
 
-    private fun applyDimLevel(dimLevel: Int) {
-        overlayView?.alpha = dimLevel / PreferencesRepository.MAX_DIM.toFloat()
+    private fun applyOverlayAppearance() {
+        val argb = preferences.resolveOverlayTintArgbBlocking()
+        overlayView?.setBackgroundColor(argb)
+        overlayView?.alpha = OverlayTint.alphaForDimLevel(currentDimLevel)
     }
 
     private fun removeOverlay() {
@@ -200,6 +208,7 @@ class OverlayService : Service() {
         const val ACTION_APPLY_DEFAULT = "cz.darken.app.overlay.APPLY_DEFAULT"
         const val ACTION_EXIT_APP = "cz.darken.app.overlay.EXIT_APP"
         const val ACTION_REFRESH_NOTIFICATION = "cz.darken.app.overlay.REFRESH_NOTIFICATION"
+        const val ACTION_REFRESH_APPEARANCE = "cz.darken.app.overlay.REFRESH_APPEARANCE"
         const val EXTRA_DIM_LEVEL = "dim_level"
         const val EXTRA_DELTA = "delta"
 
@@ -221,6 +230,13 @@ class OverlayService : Service() {
         fun refreshNotification(context: Context) {
             val intent = Intent(context, OverlayService::class.java).apply {
                 action = ACTION_REFRESH_NOTIFICATION
+            }
+            context.startService(intent)
+        }
+
+        fun refreshAppearance(context: Context) {
+            val intent = Intent(context, OverlayService::class.java).apply {
+                action = ACTION_REFRESH_APPEARANCE
             }
             context.startService(intent)
         }
