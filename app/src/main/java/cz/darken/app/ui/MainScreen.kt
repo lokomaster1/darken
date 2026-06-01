@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,8 +28,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
@@ -44,6 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import cz.darken.app.R
@@ -302,41 +304,102 @@ private fun ControlCard(
             fontWeight = FontWeight.SemiBold,
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Slider(
-            value = dimLevel.toFloat(),
-            onValueChange = { onDimLevelChange(it.toInt()) },
-            valueRange = PreferencesRepository.MIN_DIM.toFloat()..PreferencesRepository.MAX_DIM.toFloat(),
-            steps = PreferencesRepository.MAX_DIM - 1,
+        DimIntensitySlider(
+            value = dimLevel,
+            onValueChange = onDimLevelChange,
             enabled = enabled,
-            modifier = Modifier.fillMaxWidth(),
-            colors = SliderDefaults.colors(
-                thumbColor = DarkenPalette.Gold,
-                activeTrackColor = DarkenPalette.Gold,
-                inactiveTrackColor = DarkenPalette.NavyTrack,
-                disabledThumbColor = DarkenPalette.GoldDim,
-                disabledActiveTrackColor = DarkenPalette.GoldDim,
-                disabledInactiveTrackColor = DarkenPalette.NavyTrack,
-            ),
         )
-        if (hasSavedDefault) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = stringResource(R.string.default_hint, defaultDimLevel),
-                style = MaterialTheme.typography.bodySmall,
-                color = DarkenPalette.TextMuted,
-            )
-        }
-        Spacer(modifier = Modifier.height(12.dp))
-        TextButton(
-            onClick = onSaveDefault,
+        Spacer(modifier = Modifier.height(8.dp))
+        DefaultHintAndSaveRow(
+            hasSavedDefault = hasSavedDefault,
+            defaultDimLevel = defaultDimLevel,
             enabled = enabled,
-            modifier = Modifier.align(Alignment.End),
-        ) {
-            Text(
-                text = stringResource(R.string.save_default),
-                color = if (enabled) DarkenPalette.Gold else DarkenPalette.TextMuted,
-            )
+            onSaveDefault = onSaveDefault,
+        )
+    }
+}
+
+/** One row by default; stacks on very narrow width so the save action stays readable. */
+@Composable
+private fun DefaultHintAndSaveRow(
+    hasSavedDefault: Boolean,
+    defaultDimLevel: Int,
+    enabled: Boolean,
+    onSaveDefault: () -> Unit,
+) {
+    val saveLabel = stringResource(R.string.save_default)
+    val hintLabel = if (hasSavedDefault) {
+        stringResource(R.string.default_hint, defaultDimLevel)
+    } else {
+        null
+    }
+
+    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+        val stacked = maxWidth < 300.dp && hintLabel != null
+        if (stacked) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = hintLabel!!,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = DarkenPalette.TextMuted,
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                SaveDefaultButton(
+                    label = saveLabel,
+                    enabled = enabled,
+                    onClick = onSaveDefault,
+                    modifier = Modifier.align(Alignment.End),
+                )
+            }
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                if (hintLabel != null) {
+                    Text(
+                        text = hintLabel,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = DarkenPalette.TextMuted,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                } else {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+                SaveDefaultButton(
+                    label = saveLabel,
+                    enabled = enabled,
+                    onClick = onSaveDefault,
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun SaveDefaultButton(
+    label: String,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    TextButton(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = modifier.wrapContentWidth(),
+        contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp),
+    ) {
+        Text(
+            text = label,
+            color = if (enabled) DarkenPalette.Gold else DarkenPalette.TextMuted,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 
