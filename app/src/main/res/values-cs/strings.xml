@@ -32,9 +32,9 @@
     <string name="settings_privacy">Zásady ochrany soukromí</string>
     <string name="settings_privacy_subtitle">Co Darken dělá a nedělá s vašimi daty</string>
     <string name="settings_github">Zdrojový kód (GitHub)</string>
-    <string name="settings_github_subtitle">https://github.com/darken-app/darken</string>
+    <string name="settings_github_subtitle">https://github.com/lokomaster1/darken</string>
     <string name="settings_contact">Kontakt</string>
-    <string name="settings_contact_email">darken.contact@example.com</string>
+    <string name="settings_contact_email">diskus.barge163@simplelogin.com</string>
     <string name="settings_ok">OK</string>
     <string name="settings_cancel">Zrušit</string>
     <string name="language_system">Podle systému</string>
@@ -88,5 +88,5 @@
     <string name="privacy_section_third_party_title">Knihovny třetích stran</string>
     <string name="privacy_section_third_party_body">Aplikace používá standardní open-source knihovny Androidu (např. AndroidX, Jetpack Compose) v APK. Běží lokálně v zařízení a Darken je nepoužívá ke sběru dat.</string>
     <string name="privacy_section_contact_title">Kontakt a zdrojový kód</string>
-    <string name="privacy_section_contact_body">Dotazy nebo připomínky k soukromí: darken.contact@example.com (zástupný kontakt). Úplný zdrojový kód bude zveřejněn na GitHubu, aby bylo možné tyto zásady ověřit.</string>
+    <string name="privacy_section_contact_body">Dotazy nebo připomínky k soukromí: diskus.barge163@simplelogin.com. Zdrojový kód: https://github.com/lokomaster1/darken</string>
 </resources>

@@ -25,6 +25,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
@@ -300,10 +302,21 @@ private fun ControlCard(
             fontWeight = FontWeight.SemiBold,
         )
         Spacer(modifier = Modifier.height(16.dp))
-        DimIntensitySlider(
-            value = dimLevel,
-            onValueChange = onDimLevelChange,
+        Slider(
+            value = dimLevel.toFloat(),
+            onValueChange = { onDimLevelChange(it.toInt()) },
+            valueRange = PreferencesRepository.MIN_DIM.toFloat()..PreferencesRepository.MAX_DIM.toFloat(),
+            steps = PreferencesRepository.MAX_DIM - 1,
             enabled = enabled,
+            modifier = Modifier.fillMaxWidth(),
+            colors = SliderDefaults.colors(
+                thumbColor = DarkenPalette.Gold,
+                activeTrackColor = DarkenPalette.Gold,
+                inactiveTrackColor = DarkenPalette.NavyTrack,
+                disabledThumbColor = DarkenPalette.GoldDim,
+                disabledActiveTrackColor = DarkenPalette.GoldDim,
+                disabledInactiveTrackColor = DarkenPalette.NavyTrack,
+            ),
         )
         if (hasSavedDefault) {
             Spacer(modifier = Modifier.height(8.dp))

@@ -1,6 +1,8 @@
 # Darken — Privacy Policy
 
-**Last updated:** May 2026
+**Last updated:** May 2026  
+**Contact:** diskus.barge163@simplelogin.com  
+**Source:** https://github.com/lokomaster1/darken
 
 ## Summary
 
@@ -32,7 +34,6 @@ You can review or revoke permissions in Android system settings.
 
 Standard open-source Android libraries (AndroidX, Jetpack Compose) are bundled in the APK and run locally. Darken does not use them to collect data.
 
-## Contact
+## Author
 
-- Email: darken.contact@example.com (placeholder)
-- Source: https://github.com/darken-app/darken (placeholder)
+Copyright (C) 2026 lokomaster1 — licensed under GNU GPL v3.0 or later.

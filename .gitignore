@@ -9,3 +9,8 @@
 .cxx/
 app/build/
 app/release/
+
+# Editor lock files
+*~
+.~lock.*
+**/.~lock.*

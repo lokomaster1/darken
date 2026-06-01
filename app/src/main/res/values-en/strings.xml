@@ -32,9 +32,9 @@
     <string name="settings_privacy">Privacy policy</string>
     <string name="settings_privacy_subtitle">What Darken does and does not do with your data</string>
     <string name="settings_github">Source code (GitHub)</string>
-    <string name="settings_github_subtitle">https://github.com/darken-app/darken</string>
+    <string name="settings_github_subtitle">https://github.com/lokomaster1/darken</string>
     <string name="settings_contact">Contact</string>
-    <string name="settings_contact_email">darken.contact@example.com</string>
+    <string name="settings_contact_email">diskus.barge163@simplelogin.com</string>
     <string name="settings_ok">OK</string>
     <string name="settings_cancel">Cancel</string>
     <string name="language_system">System default</string>
@@ -88,5 +88,5 @@
     <string name="privacy_section_third_party_title">Third-party libraries</string>
     <string name="privacy_section_third_party_body">The app uses standard Android open-source libraries (e.g. AndroidX, Jetpack Compose) shipped with the APK. They run locally on your device and are not used by Darken to collect data.</string>
     <string name="privacy_section_contact_title">Contact &amp; source code</string>
-    <string name="privacy_section_contact_body">Questions or privacy concerns: darken.contact@example.com (placeholder). Full source code will be published on GitHub so anyone can verify this policy.</string>
+    <string name="privacy_section_contact_body">Questions or privacy concerns: diskus.barge163@simplelogin.com. Source code: https://github.com/lokomaster1/darken</string>
 </resources>
