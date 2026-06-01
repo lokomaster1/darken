@@ -57,11 +57,10 @@ If you experience unexpected behavior in such apps, try disabling the overlay.
 AndroidX / Jetpack Compose / DataStore (Apache License 2.0), linked into the app binary.
 
 
-## Development note
+## Developer note
 
 Code was written with assistance from **[Cursor](https://cursor.com)** (AI-assisted IDE). Thank you to the Cursor team and the models behind it
 
-The author (**lokomaster1**) owns the project direction, testing, and release; you can audit every line in this repository.
 
 ## More info
 - **Repository:** https://github.com/lokomaster1/darken  
