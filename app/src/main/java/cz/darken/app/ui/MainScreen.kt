@@ -2,6 +2,7 @@ package cz.darken.app.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -139,14 +140,17 @@ fun MainScreen(
                     onDimLevelChange = onDimLevelChange,
                     onSaveDefault = onSaveDefault,
                 )
-
-                ExitSection(onExitApp = onExitApp)
             }
 
-            BottomBar(
-                onOpenPermissions = onOpenPermissions,
-                onOpenSettings = onOpenSettings,
-            )
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp),
+            ) {
+                ExitSection(onExitApp = onExitApp)
+                BottomBar(
+                    onOpenPermissions = onOpenPermissions,
+                    onOpenSettings = onOpenSettings,
+                )
+            }
         }
 
         SnackbarHost(
@@ -197,20 +201,17 @@ private fun BottomBar(
 
 @Composable
 private fun ExitSection(onExitApp: () -> Unit) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    OutlinedButton(
+        onClick = onExitApp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, bottom = 4.dp),
+        shape = RoundedCornerShape(16.dp),
     ) {
-        OutlinedButton(
-            onClick = onExitApp,
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.exit_app),
-                color = DarkenPalette.TextMuted,
-            )
-        }
+        Text(
+            text = stringResource(R.string.exit_app),
+            color = DarkenPalette.TextMuted,
+        )
     }
 }
 
@@ -329,9 +330,18 @@ private fun ToggleCard(
     enabled: Boolean,
     onToggle: (Boolean) -> Unit,
 ) {
+    val toggleInteraction = remember { MutableInteractionSource() }
     DarkenCard(modifier = Modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    enabled = enabled,
+                    interactionSource = toggleInteraction,
+                    indication = null,
+                ) {
+                    onToggle(!overlayActive)
+                },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -346,8 +356,9 @@ private fun ToggleCard(
             )
             Switch(
                 checked = overlayActive,
-                onCheckedChange = onToggle,
+                onCheckedChange = null,
                 enabled = enabled,
+                interactionSource = toggleInteraction,
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = DarkenPalette.TextPrimary,
                     checkedTrackColor = DarkenPalette.Gold,

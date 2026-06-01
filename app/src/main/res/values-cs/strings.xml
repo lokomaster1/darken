@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Darken</string>
-    <string name="fgs_special_use_description">Udržuje na obrazovce překryvnou vrstvu pro dodatečné stmavení displeje.</string>
 
     <string name="status_prefix">Stav:</string>
     <string name="status_active">aktivní</string>

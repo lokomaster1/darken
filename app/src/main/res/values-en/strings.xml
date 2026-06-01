@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Darken</string>
-    <string name="fgs_special_use_description">Keeps the screen-dimming overlay visible.</string>
 
     <string name="status_prefix">Status:</string>
     <string name="status_active">active</string>

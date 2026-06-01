@@ -135,11 +135,7 @@ class MainActivity : AppCompatActivity() {
                             overlayActive.value = false
                         } else {
                             overlayDisabledByUser = false
-                            lifecycleScope.launch {
-                                val level = preferences.resolveDefaultDimLevel()
-                                dimLevelState.intValue = level
-                                startOverlay(level) { snackbarMessage = it }
-                            }
+                            startOverlay(dimLevelState.intValue) { snackbarMessage = it }
                         }
                     },
                     onSaveDefault = {
@@ -192,8 +188,6 @@ class MainActivity : AppCompatActivity() {
     private suspend fun syncDimLevelFromState() {
         if (overlayActive.value) {
             OverlayService.lastKnownDimLevel?.let { dimLevelState.intValue = it }
-        } else {
-            dimLevelState.intValue = preferences.resolveDefaultDimLevel()
         }
     }
 
