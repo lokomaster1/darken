@@ -6,7 +6,7 @@ Why this exists:
 
 I couldn’t really find a modern, open-source Android app that does this properly — something up-to-date, simple, and with all the basic features easily accessible. So I built this for myself as a clean, minimal tool that just does its job without unnecessary complexity. 
 
-Latest versions of Android system have integrated similar feature called "extra dim", and that is BEST, most secure solution you can use, and is fully recommended. However, you possibly can appreciate this app, if system brightness is still too high for you.
+Latest versions of Android system have integrated similar feature called "extra dim", and that is BEST, most secure solution you can use, and is fully recommended. However, you possibly can appreciate this app, if system brightness is still too high for you, or if you prefer some other app features like custom color tint
 
 
 ## Features
