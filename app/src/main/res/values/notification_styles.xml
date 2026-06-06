@@ -1,12 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="NotificationActionText">
+    <style name="NotificationActionCell">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">1dp</item>
+        <item name="android:layout_marginEnd">1dp</item>
+        <item name="android:background">@drawable/notification_action_bg</item>
+    </style>
+
+    <style name="NotificationLevelCell">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1.25</item>
+        <item name="android:layout_marginStart">1dp</item>
+        <item name="android:layout_marginEnd">1dp</item>
+        <item name="android:background">@drawable/notification_level_bg</item>
+    </style>
+
+    <style name="NotificationActionText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">#E8B84A</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="NotificationLevelText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/on_background</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="NotificationActionCellCollapsed">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">1dp</item>
+        <item name="android:layout_marginEnd">1dp</item>
+        <item name="android:background">@drawable/notification_action_bg</item>
+    </style>
+
+    <style name="NotificationLevelCellCollapsed">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1.25</item>
+        <item name="android:layout_marginStart">1dp</item>
+        <item name="android:layout_marginEnd">1dp</item>
+        <item name="android:background">@drawable/notification_level_bg</item>
+    </style>
+
+    <style name="NotificationActionTextCollapsed">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/primary</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="NotificationLevelTextCollapsed">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/on_background</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:padding">0dp</item>

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.2
+
+- Interactive notification redesign (larger controls, tap highlight, current level display)
+- Separate compact layout for collapsed notification shade
+- Dimming steps in notification: −10 / −2 / +2 / +10
+- Fix: app ON/OFF toggle syncs when overlay is stopped from notification
+
 ## 1.2.1
 
 - GUI optimizations (header card layout, intensity card)

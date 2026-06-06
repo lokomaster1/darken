@@ -302,6 +302,11 @@ class MainActivity : AppCompatActivity() {
         finishAndRemoveTask()
     }
 
+    fun onOverlayStoppedExternally() {
+        overlayActive.value = false
+        overlayDisabledByUser = true
+    }
+
     private suspend fun syncDimLevelFromState() {
         if (overlayActive.value) {
             OverlayService.lastKnownDimLevel?.let { dimLevelState.intValue = it }

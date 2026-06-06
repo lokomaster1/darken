@@ -8,7 +8,9 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -26,6 +28,11 @@ class OverlayService : Service() {
     private var windowManager: WindowManager? = null
     private var overlayView: View? = null
     private var currentDimLevel: Int = PreferencesRepository.FALLBACK_DEFAULT
+    private var pressedCellId: Int? = null
+    private var highlightPhase = OverlayNotificationFactory.HighlightPhase.NONE
+    private val highlightHandler = Handler(Looper.getMainLooper())
+    private var highlightFadeRunnable: Runnable? = null
+    private var highlightClearRunnable: Runnable? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -67,12 +74,8 @@ class OverlayService : Service() {
             ACTION_ADJUST -> {
                 if (overlayView == null) return START_STICKY
                 val delta = intent.getIntExtra(EXTRA_DELTA, 0)
+                flashPressedCell(intent.getIntExtra(EXTRA_PRESSED_CELL, View.NO_ID))
                 setDimLevel(currentDimLevel + delta)
-                return START_STICKY
-            }
-            ACTION_APPLY_DEFAULT -> {
-                if (overlayView == null) return START_STICKY
-                setDimLevel(preferences.defaultDimLevelBlocking())
                 return START_STICKY
             }
             else -> {
@@ -86,6 +89,7 @@ class OverlayService : Service() {
     }
 
     override fun onDestroy() {
+        cancelHighlightAnimation()
         removeOverlay()
         super.onDestroy()
     }
@@ -96,6 +100,7 @@ class OverlayService : Service() {
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
         DarkenTileService.requestTileUpdate(this)
+        MainActivityHolder.notifyOverlayStopped()
     }
 
     private fun ensureOverlay(dimLevel: Int) {
@@ -163,12 +168,50 @@ class OverlayService : Service() {
         manager.notify(NOTIFICATION_ID, buildNotification())
     }
 
+    private fun flashPressedCell(cellId: Int) {
+        if (cellId == View.NO_ID) return
+        cancelHighlightAnimation()
+        pressedCellId = cellId
+        highlightPhase = OverlayNotificationFactory.HighlightPhase.PRESSED
+
+        val fade = Runnable {
+            highlightPhase = OverlayNotificationFactory.HighlightPhase.FADING
+            refreshNotification()
+            highlightClearRunnable = Runnable { clearHighlight() }
+            highlightHandler.postDelayed(highlightClearRunnable!!, HIGHLIGHT_FADE_MS)
+        }
+        highlightFadeRunnable = fade
+        highlightHandler.postDelayed(fade, HIGHLIGHT_PRESS_MS)
+    }
+
+    private fun clearHighlight() {
+        pressedCellId = null
+        highlightPhase = OverlayNotificationFactory.HighlightPhase.NONE
+        highlightFadeRunnable = null
+        highlightClearRunnable = null
+        refreshNotification()
+    }
+
+    private fun cancelHighlightAnimation() {
+        highlightFadeRunnable?.let { highlightHandler.removeCallbacks(it) }
+        highlightClearRunnable?.let { highlightHandler.removeCallbacks(it) }
+        highlightFadeRunnable = null
+        highlightClearRunnable = null
+    }
+
     private fun buildNotification(): Notification {
         createChannelsIfNeeded()
         val mode = preferences.notificationModeBlocking()
         val defaultLevel = preferences.defaultDimLevelBlocking()
         return OverlayNotificationFactory
-            .build(this, mode, currentDimLevel, defaultLevel)
+            .build(
+                this,
+                mode,
+                currentDimLevel,
+                defaultLevel,
+                pressedCellId,
+                highlightPhase,
+            )
             .build()
     }
 
@@ -208,12 +251,15 @@ class OverlayService : Service() {
         const val ACTION_STOP = "cz.darken.app.overlay.STOP"
         const val ACTION_UPDATE = "cz.darken.app.overlay.UPDATE"
         const val ACTION_ADJUST = "cz.darken.app.overlay.ADJUST"
-        const val ACTION_APPLY_DEFAULT = "cz.darken.app.overlay.APPLY_DEFAULT"
         const val ACTION_EXIT_APP = "cz.darken.app.overlay.EXIT_APP"
         const val ACTION_REFRESH_NOTIFICATION = "cz.darken.app.overlay.REFRESH_NOTIFICATION"
         const val ACTION_REFRESH_APPEARANCE = "cz.darken.app.overlay.REFRESH_APPEARANCE"
         const val EXTRA_DIM_LEVEL = "dim_level"
         const val EXTRA_DELTA = "delta"
+        const val EXTRA_PRESSED_CELL = "pressed_cell"
+
+        private const val HIGHLIGHT_PRESS_MS = 90L
+        private const val HIGHLIGHT_FADE_MS = 120L
 
         fun start(context: Context, dimLevel: Int) {
             val intent = Intent(context, OverlayService::class.java).apply {

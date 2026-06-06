@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="54dp"
+    android:layout_height="40dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingStart="0dp"
@@ -9,54 +9,54 @@
 
     <FrameLayout
         android:id="@+id/cell_minus5"
-        style="@style/NotificationActionCell">
+        style="@style/NotificationActionCellCollapsed">
         <TextView
             android:id="@+id/action_minus5"
-            style="@style/NotificationActionText"
+            style="@style/NotificationActionTextCollapsed"
             android:text="&lt;&lt;" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/cell_minus1"
-        style="@style/NotificationActionCell">
+        style="@style/NotificationActionCellCollapsed">
         <TextView
             android:id="@+id/action_minus1"
-            style="@style/NotificationActionText"
+            style="@style/NotificationActionTextCollapsed"
             android:text="&lt;" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/cell_level"
-        style="@style/NotificationLevelCell">
+        style="@style/NotificationLevelCellCollapsed">
         <TextView
             android:id="@+id/display_level"
-            style="@style/NotificationLevelText" />
+            style="@style/NotificationLevelTextCollapsed" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/cell_stop"
-        style="@style/NotificationActionCell">
+        style="@style/NotificationActionCellCollapsed">
         <TextView
             android:id="@+id/action_stop"
-            style="@style/NotificationActionText"
+            style="@style/NotificationActionTextCollapsed"
             android:text="X" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/cell_plus1"
-        style="@style/NotificationActionCell">
+        style="@style/NotificationActionCellCollapsed">
         <TextView
             android:id="@+id/action_plus1"
-            style="@style/NotificationActionText"
+            style="@style/NotificationActionTextCollapsed"
             android:text="&gt;" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/cell_plus5"
-        style="@style/NotificationActionCell">
+        style="@style/NotificationActionCellCollapsed">
         <TextView
             android:id="@+id/action_plus5"
-            style="@style/NotificationActionText"
+            style="@style/NotificationActionTextCollapsed"
             android:text="&gt;&gt;" />
     </FrameLayout>
 </LinearLayout>

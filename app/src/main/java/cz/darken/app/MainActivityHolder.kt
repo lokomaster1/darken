@@ -21,4 +21,10 @@ object MainActivityHolder {
             activityRef?.get()?.exitAppFully()
         }
     }
+
+    fun notifyOverlayStopped() {
+        activityRef?.get()?.runOnUiThread {
+            activityRef?.get()?.onOverlayStoppedExternally()
+        }
+    }
 }

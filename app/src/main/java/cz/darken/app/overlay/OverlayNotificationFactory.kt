@@ -11,11 +11,19 @@ import cz.darken.app.data.PreferencesRepository
 
 object OverlayNotificationFactory {
 
+    enum class HighlightPhase {
+        NONE,
+        PRESSED,
+        FADING,
+    }
+
     fun build(
         context: Context,
         mode: String,
         currentDimLevel: Int,
         defaultDimLevel: Int,
+        pressedCellId: Int? = null,
+        highlightPhase: HighlightPhase = HighlightPhase.NONE,
     ): NotificationCompat.Builder {
         val openApp = PendingIntent.getActivity(
             context,
@@ -25,7 +33,13 @@ object OverlayNotificationFactory {
         )
 
         return if (mode == PreferencesRepository.NOTIF_INTERACTIVE) {
-            buildInteractive(context, openApp, currentDimLevel, defaultDimLevel)
+            buildInteractive(
+                context,
+                openApp,
+                currentDimLevel,
+                pressedCellId,
+                highlightPhase,
+            )
         } else {
             buildMinimal(context, openApp)
         }
@@ -49,17 +63,23 @@ object OverlayNotificationFactory {
         context: Context,
         openApp: PendingIntent,
         currentDimLevel: Int,
-        defaultDimLevel: Int,
+        pressedCellId: Int?,
+        highlightPhase: HighlightPhase,
     ): NotificationCompat.Builder {
-        val remoteViews = RemoteViews(context.packageName, R.layout.notification_interactive)
-        remoteViews.setTextViewText(R.id.action_default, "$defaultDimLevel%")
-
-        bindAction(remoteViews, context, R.id.action_minus5, OverlayService.ACTION_ADJUST, -5, 10)
-        bindAction(remoteViews, context, R.id.action_minus1, OverlayService.ACTION_ADJUST, -1, 11)
-        bindAction(remoteViews, context, R.id.action_default, OverlayService.ACTION_APPLY_DEFAULT, 0, 12)
-        bindAction(remoteViews, context, R.id.action_stop, OverlayService.ACTION_STOP, 0, 13)
-        bindAction(remoteViews, context, R.id.action_plus1, OverlayService.ACTION_ADJUST, 1, 14)
-        bindAction(remoteViews, context, R.id.action_plus5, OverlayService.ACTION_ADJUST, 5, 15)
+        val collapsedViews = buildInteractiveRemoteViews(
+            context,
+            R.layout.notification_interactive_collapsed,
+            currentDimLevel,
+            pressedCellId,
+            highlightPhase,
+        )
+        val expandedViews = buildInteractiveRemoteViews(
+            context,
+            R.layout.notification_interactive,
+            currentDimLevel,
+            pressedCellId,
+            highlightPhase,
+        )
 
         return NotificationCompat.Builder(context, OverlayService.CHANNEL_INTERACTIVE)
             .setSmallIcon(R.drawable.ic_notification)
@@ -67,8 +87,8 @@ object OverlayNotificationFactory {
             .setContentText(context.getString(R.string.notification_text_level, currentDimLevel))
             .setContentIntent(openApp)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
-            .setCustomContentView(remoteViews)
-            .setCustomBigContentView(remoteViews)
+            .setCustomContentView(collapsedViews)
+            .setCustomBigContentView(expandedViews)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setSilent(true)
@@ -76,16 +96,57 @@ object OverlayNotificationFactory {
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
     }
 
+    private fun buildInteractiveRemoteViews(
+        context: Context,
+        layoutId: Int,
+        currentDimLevel: Int,
+        pressedCellId: Int?,
+        highlightPhase: HighlightPhase,
+    ): RemoteViews {
+        val remoteViews = RemoteViews(context.packageName, layoutId)
+        remoteViews.setTextViewText(R.id.display_level, "$currentDimLevel%")
+
+        val actionCells = listOf(
+            R.id.cell_minus5,
+            R.id.cell_minus1,
+            R.id.cell_stop,
+            R.id.cell_plus1,
+            R.id.cell_plus5,
+        )
+        val pressedDrawable = when (highlightPhase) {
+            HighlightPhase.PRESSED -> R.drawable.notification_action_pressed
+            HighlightPhase.FADING -> R.drawable.notification_action_pressed_fade
+            HighlightPhase.NONE -> null
+        }
+        for (cellId in actionCells) {
+            val background = if (cellId == pressedCellId && pressedDrawable != null) {
+                pressedDrawable
+            } else {
+                R.drawable.notification_action_bg
+            }
+            remoteViews.setInt(cellId, "setBackgroundResource", background)
+        }
+
+        bindAction(remoteViews, context, R.id.cell_minus5, OverlayService.ACTION_ADJUST, -10, 10)
+        bindAction(remoteViews, context, R.id.cell_minus1, OverlayService.ACTION_ADJUST, -2, 11)
+        bindAction(remoteViews, context, R.id.cell_stop, OverlayService.ACTION_STOP, 0, 13)
+        bindAction(remoteViews, context, R.id.cell_plus1, OverlayService.ACTION_ADJUST, 2, 14)
+        bindAction(remoteViews, context, R.id.cell_plus5, OverlayService.ACTION_ADJUST, 10, 15)
+
+        return remoteViews
+    }
+
     private fun bindAction(
         remoteViews: RemoteViews,
         context: Context,
-        viewId: Int,
+        cellId: Int,
         action: String,
         delta: Int,
         requestCode: Int,
     ) {
         val intent = Intent(context, OverlayService::class.java).apply {
             this.action = action
+            putExtra(OverlayService.EXTRA_PRESSED_CELL, cellId)
             if (action == OverlayService.ACTION_ADJUST) {
                 putExtra(OverlayService.EXTRA_DELTA, delta)
             }
@@ -96,6 +157,6 @@ object OverlayNotificationFactory {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
-        remoteViews.setOnClickPendingIntent(viewId, pending)
+        remoteViews.setOnClickPendingIntent(cellId, pending)
     }
 }
