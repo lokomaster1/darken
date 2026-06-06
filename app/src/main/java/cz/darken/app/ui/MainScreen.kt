@@ -233,30 +233,52 @@ private fun ExitSection(onExitApp: () -> Unit) {
     }
 }
 
+private val HeaderIconSize = 48.dp
+private val HeaderIconTitleGap = 12.dp
+
+/** Matches stacked layout before icon-beside-title: icon + 12 + title + 8 + status. */
+private val HeaderCardContentHeight = 124.dp
+
 @Composable
 private fun HeaderCard(
     overlayActive: Boolean,
     canDrawOverlays: Boolean,
 ) {
+    val titleOffset = (HeaderIconSize + HeaderIconTitleGap) / 2
+
     DarkenCard(modifier = Modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(HeaderCardContentHeight),
+            contentAlignment = Alignment.Center,
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_moon_header),
-                contentDescription = null,
-                tint = DarkenPalette.Gold,
-                modifier = Modifier.size(48.dp),
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = stringResource(R.string.app_name).uppercase(),
-                style = MaterialTheme.typography.headlineMedium,
-                color = DarkenPalette.TextPrimary,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            StatusLine(active = overlayActive && canDrawOverlays)
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Row(
+                        modifier = Modifier.offset(x = -titleOffset),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_moon_header),
+                            contentDescription = null,
+                            tint = DarkenPalette.Gold,
+                            modifier = Modifier.size(HeaderIconSize),
+                        )
+                        Spacer(modifier = Modifier.size(HeaderIconTitleGap))
+                        Text(
+                            text = stringResource(R.string.app_name).uppercase(),
+                            style = MaterialTheme.typography.headlineMedium,
+                            color = DarkenPalette.TextPrimary,
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                StatusLine(active = overlayActive && canDrawOverlays)
+            }
         }
     }
 }
@@ -314,6 +336,7 @@ private fun ControlCard(
             hasSavedDefault = hasSavedDefault,
             defaultDimLevel = defaultDimLevel,
             enabled = enabled,
+            onApplyDefault = { onDimLevelChange(defaultDimLevel) },
             onSaveDefault = onSaveDefault,
         )
     }
@@ -325,6 +348,7 @@ private fun DefaultHintAndSaveRow(
     hasSavedDefault: Boolean,
     defaultDimLevel: Int,
     enabled: Boolean,
+    onApplyDefault: () -> Unit,
     onSaveDefault: () -> Unit,
 ) {
     val saveLabel = stringResource(R.string.save_default)
@@ -338,10 +362,10 @@ private fun DefaultHintAndSaveRow(
         val stacked = maxWidth < 300.dp && hintLabel != null
         if (stacked) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = hintLabel!!,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = DarkenPalette.TextMuted,
+                DefaultHintText(
+                    label = hintLabel!!,
+                    enabled = enabled,
+                    onClick = onApplyDefault,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 SaveDefaultButton(
@@ -358,15 +382,13 @@ private fun DefaultHintAndSaveRow(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 if (hintLabel != null) {
-                    Text(
-                        text = hintLabel,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = DarkenPalette.TextMuted,
+                    DefaultHintText(
+                        label = hintLabel,
+                        enabled = enabled,
+                        onClick = onApplyDefault,
                         modifier = Modifier
                             .weight(1f)
                             .padding(end = 8.dp),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
                     )
                 } else {
                     Spacer(modifier = Modifier.weight(1f))
@@ -379,6 +401,26 @@ private fun DefaultHintAndSaveRow(
             }
         }
     }
+}
+
+@Composable
+private fun DefaultHintText(
+    label: String,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = label,
+        style = MaterialTheme.typography.bodySmall,
+        color = DarkenPalette.TextPrimary,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        modifier = modifier.clickable(
+            enabled = enabled,
+            onClick = onClick,
+        ),
+    )
 }
 
 @Composable

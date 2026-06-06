@@ -28,6 +28,14 @@
     <string name="settings_behavior">Chování</string>
     <string name="settings_auto_start">Automaticky zapnout při otevření aplikace</string>
     <string name="settings_auto_start_hint">Po povolení a nastavení oprávnění se překrytí zapne samo při každém otevření Darken.</string>
+    <string name="settings_notification">Oznámení</string>
+    <string name="settings_notification_minimal">Minimální (jen ikona)</string>
+    <string name="settings_notification_interactive">Interaktivní (ovládání stmavení)</string>
+    <string name="settings_notification_hint">Interaktivní ovládání se zobrazí v oznamovací roletce, když je překrytí aktivní.</string>
+    <string name="settings_qs_tile">Dlaždice rychlého nastavení</string>
+    <string name="qs_tile_label">Darken</string>
+    <string name="settings_qs_tile_hint">Přidejte dlaždici Darken do rychlého nastavení pro zapnutí/vypnutí bez otevření aplikace. Upravit dlaždice → Darken → přetáhnout do panelu.</string>
+    <string name="settings_qs_tile_button">Otevřít nastavení dlaždic</string>
     <string name="settings_about">O aplikaci</string>
     <string name="settings_privacy">Zásady ochrany soukromí</string>
     <string name="settings_privacy_subtitle">Co Darken dělá a nedělá s vašimi daty</string>
@@ -70,6 +78,7 @@
     <string name="notification_channel_description">Minimální oznámení pro běh překryvné vrstvy na pozadí.</string>
     <string name="notification_title">Darken je aktivní</string>
     <string name="notification_text">Překrytí stmavuje displej</string>
+    <string name="notification_text_level">Stmavení: %1$d %%</string>
 
     <string name="privacy_title">Zásady ochrany soukromí</string>
     <string name="privacy_updated">Poslední aktualizace: květen 2026</string>

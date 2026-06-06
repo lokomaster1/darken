@@ -23,7 +23,7 @@
         android:text="50%" />
 
     <TextView
-        android:id="@+id/action_exit"
+        android:id="@+id/action_stop"
         style="@style/NotificationActionText"
         android:text="X" />
 

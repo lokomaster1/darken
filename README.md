@@ -13,6 +13,8 @@ Latest versions of Android system have integrated similar feature called "extra 
 
 - Adjustable dimming intensity (0–99 %)
 - Filter colors: gray, warm brown, red, or custom palette / hex
+- Quick Settings tile to toggle dimming without opening the app
+- Optional interactive notification controls (±1 / ±5 %, default) while overlay is active
 - Czech and English UI
 - Settings stored only on device (DataStore)
 - Minimal foreground notification while overlay is active (Android 13+)
@@ -76,6 +78,9 @@ Code was written with assistance from **[Cursor](https://cursor.com)** (AI-assis
 ## Česky
 
 **Darken** je svobodná aplikace pro Android, která dodatečně ztmaví displej překryvnou vrstvou. Bez reklam, bez analytiky, bez oprávnění k internetu.
+
+- Dlaždice v rychlém nastavení pro zapnutí/vypnutí bez otevření aplikace
+- Volitelné ovládání stmavení z oznamovací roletky (±1 / ±5 %, výchozí hodnota)
 
 - Repozitář: https://github.com/lokomaster1/darken  
 - Kontakt: diskus.barge163@simplelogin (dot) com  

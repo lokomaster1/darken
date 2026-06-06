@@ -28,6 +28,14 @@
     <string name="settings_behavior">Behavior</string>
     <string name="settings_auto_start">Auto-enable when opening the app</string>
     <string name="settings_auto_start_hint">After permissions are set, overlay turns on each time you open Darken.</string>
+    <string name="settings_notification">Notification</string>
+    <string name="settings_notification_minimal">Minimal (icon only)</string>
+    <string name="settings_notification_interactive">Interactive (adjust dimming)</string>
+    <string name="settings_notification_hint">Interactive controls appear in the notification shade while overlay is active.</string>
+    <string name="settings_qs_tile">Quick Settings tile</string>
+    <string name="qs_tile_label">Darken</string>
+    <string name="settings_qs_tile_hint">Add the Darken tile in system Quick Settings to toggle dimming without opening the app. Edit tiles → find Darken → drag to the panel.</string>
+    <string name="settings_qs_tile_button">Open tile settings</string>
     <string name="settings_about">About</string>
     <string name="settings_privacy">Privacy policy</string>
     <string name="settings_privacy_subtitle">What Darken does and does not do with your data</string>
@@ -70,6 +78,7 @@
     <string name="notification_channel_description">Minimal notification while the overlay runs.</string>
     <string name="notification_title">Darken is active</string>
     <string name="notification_text">Overlay is dimming the display</string>
+    <string name="notification_text_level">Dimming: %1$d %%</string>
 
     <string name="privacy_title">Privacy policy</string>
     <string name="privacy_updated">Last updated: May 2026</string>

@@ -36,14 +36,17 @@ import cz.darken.app.data.PreferencesRepository
 fun SettingsDialog(
     savedLanguage: String,
     savedAutoStartOnLaunch: Boolean,
-    onConfirm: (language: String, autoStartOnLaunch: Boolean) -> Unit,
+    savedNotificationMode: String,
+    onConfirm: (language: String, autoStartOnLaunch: Boolean, notificationMode: String) -> Unit,
     onDismiss: () -> Unit,
     onOpenPrivacy: () -> Unit,
     onOpenGithub: () -> Unit,
     onOpenContact: () -> Unit,
+    onOpenQsTiles: () -> Unit,
 ) {
     var draftLanguage by remember(savedLanguage) { mutableStateOf(savedLanguage) }
     var draftAutoStart by remember(savedAutoStartOnLaunch) { mutableStateOf(savedAutoStartOnLaunch) }
+    var draftNotificationMode by remember(savedNotificationMode) { mutableStateOf(savedNotificationMode) }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -124,6 +127,46 @@ fun SettingsDialog(
                         color = DarkenPalette.NavyTrack,
                     )
 
+                    SectionTitle(stringResource(R.string.settings_notification))
+                    NotificationModeOption(
+                        label = stringResource(R.string.settings_notification_minimal),
+                        selected = draftNotificationMode == PreferencesRepository.NOTIF_MINIMAL,
+                        onClick = { draftNotificationMode = PreferencesRepository.NOTIF_MINIMAL },
+                    )
+                    NotificationModeOption(
+                        label = stringResource(R.string.settings_notification_interactive),
+                        selected = draftNotificationMode == PreferencesRepository.NOTIF_INTERACTIVE,
+                        onClick = { draftNotificationMode = PreferencesRepository.NOTIF_INTERACTIVE },
+                    )
+                    Text(
+                        text = stringResource(R.string.settings_notification_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = DarkenPalette.TextMuted,
+                    )
+
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 10.dp),
+                        color = DarkenPalette.NavyTrack,
+                    )
+
+                    SectionTitle(stringResource(R.string.settings_qs_tile))
+                    Text(
+                        text = stringResource(R.string.settings_qs_tile_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = DarkenPalette.TextMuted,
+                    )
+                    TextButton(onClick = onOpenQsTiles) {
+                        Text(
+                            text = stringResource(R.string.settings_qs_tile_button),
+                            color = DarkenPalette.Gold,
+                        )
+                    }
+
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 10.dp),
+                        color = DarkenPalette.NavyTrack,
+                    )
+
                     SectionTitle(stringResource(R.string.settings_about))
                     SettingsLink(
                         label = stringResource(R.string.settings_privacy),
@@ -151,7 +194,9 @@ fun SettingsDialog(
                             color = DarkenPalette.TextMuted,
                         )
                     }
-                    TextButton(onClick = { onConfirm(draftLanguage, draftAutoStart) }) {
+                    TextButton(onClick = {
+                        onConfirm(draftLanguage, draftAutoStart, draftNotificationMode)
+                    }) {
                         Text(stringResource(R.string.settings_ok), color = DarkenPalette.Gold)
                     }
                 }
@@ -186,6 +231,34 @@ private fun LanguageOption(
             selected = selected,
             onClick = onClick,
             modifier = Modifier.padding(end = 0.dp),
+            colors = RadioButtonDefaults.colors(
+                selectedColor = DarkenPalette.Gold,
+                unselectedColor = DarkenPalette.TextMuted,
+            ),
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = DarkenPalette.TextPrimary,
+        )
+    }
+}
+
+@Composable
+private fun NotificationModeOption(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RadioButton(
+            selected = selected,
+            onClick = onClick,
             colors = RadioButtonDefaults.colors(
                 selectedColor = DarkenPalette.Gold,
                 unselectedColor = DarkenPalette.TextMuted,

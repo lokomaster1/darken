@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import cz.darken.app.data.PreferencesRepository
 import cz.darken.app.locale.LocaleHelper
+import cz.darken.app.overlay.OverlayLauncher
 import cz.darken.app.overlay.OverlayService
 import cz.darken.app.overlay.OverlayTint
 import cz.darken.app.ui.CustomColorDialog
@@ -60,6 +61,10 @@ class MainActivity : AppCompatActivity() {
         overlayDisabledByUser = savedInstanceState?.getBoolean(KEY_OVERLAY_DISABLED_BY_USER, false) ?: false
         colorFilterExpanded.value = savedInstanceState?.getBoolean(KEY_COLOR_FILTER_EXPANDED, false) ?: false
 
+        if (intent?.getBooleanExtra(EXTRA_OPEN_PERMISSIONS, false) == true) {
+            showPermissionsDialog.value = true
+        }
+
         setContent {
             val defaultDim by preferences.defaultDimLevel.collectAsStateWithLifecycle(
                 initialValue = PreferencesRepository.FALLBACK_DEFAULT,
@@ -72,6 +77,9 @@ class MainActivity : AppCompatActivity() {
             )
             val autoStartOnLaunch by preferences.autoStartOnLaunch.collectAsStateWithLifecycle(
                 initialValue = false,
+            )
+            val notificationMode by preferences.notificationMode.collectAsStateWithLifecycle(
+                initialValue = PreferencesRepository.NOTIF_MINIMAL,
             )
             val tintPreset by preferences.overlayTintPreset.collectAsStateWithLifecycle(
                 initialValue = OverlayTint.PRESET_GRAY,
@@ -178,14 +186,21 @@ class MainActivity : AppCompatActivity() {
                 SettingsDialog(
                     savedLanguage = appLanguage,
                     savedAutoStartOnLaunch = autoStartOnLaunch,
-                    onConfirm = { language, autoStart ->
-                        applySettings(language, autoStart)
+                    savedNotificationMode = notificationMode,
+                    onConfirm = { language, autoStart, notifMode ->
+                        applySettings(language, autoStart, notifMode)
                         showSettingsDialog.value = false
                     },
                     onDismiss = { showSettingsDialog.value = false },
                     onOpenPrivacy = { showPrivacyPolicy.value = true },
                     onOpenGithub = { openGithub() },
                     onOpenContact = { openContactEmail() },
+                    onOpenQsTiles = {
+                        startActivity(
+                            PermissionIntents.qsTileSettings(this)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        )
+                    },
                 )
             }
 
@@ -207,7 +222,7 @@ class MainActivity : AppCompatActivity() {
                     onToggleOverlay = { enable ->
                         if (!enable) {
                             overlayDisabledByUser = true
-                            OverlayService.stop(this)
+                            OverlayLauncher.stop(this)
                             overlayActive.value = false
                         } else {
                             overlayDisabledByUser = false
@@ -269,8 +284,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        overlayActive.value = isOverlayServiceRunning()
+        overlayActive.value = OverlayLauncher.isOverlayRunning(this)
         permissionRefreshKey.intValue++
+        if (intent?.getBooleanExtra(EXTRA_OPEN_PERMISSIONS, false) == true) {
+            showPermissionsDialog.value = true
+            intent?.removeExtra(EXTRA_OPEN_PERMISSIONS)
+        }
         lifecycleScope.launch {
             syncDimLevelFromState()
             maybeAutoStartOverlay()
@@ -278,7 +297,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun exitAppFully() {
-        OverlayService.stop(this)
+        OverlayLauncher.stop(this)
         overlayActive.value = false
         finishAndRemoveTask()
     }
@@ -289,12 +308,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun applySettings(language: String, autoStartOnLaunch: Boolean) {
+    private fun applySettings(
+        language: String,
+        autoStartOnLaunch: Boolean,
+        notificationMode: String,
+    ) {
         lifecycleScope.launch {
             val previousLanguage = preferences.appLanguage.first()
             preferences.setAppLanguage(language)
             preferences.setAutoStartOnLaunch(autoStartOnLaunch)
-            preferences.setNotificationMode(PreferencesRepository.NOTIF_MINIMAL)
+            preferences.setNotificationMode(notificationMode)
+
+            if (overlayActive.value) {
+                OverlayService.refreshNotification(this@MainActivity)
+            }
 
             if (previousLanguage != language) {
                 LocaleHelper.apply(language)
@@ -307,8 +334,8 @@ class MainActivity : AppCompatActivity() {
         if (overlayDisabledByUser) return
         lifecycleScope.launch {
             if (!preferences.autoStartOnLaunchEnabled()) return@launch
-            if (!canDrawOverlays() || !notificationsGranted()) return@launch
-            if (isOverlayServiceRunning()) {
+            if (!OverlayLauncher.canStart(this@MainActivity)) return@launch
+            if (OverlayLauncher.isOverlayRunning(this@MainActivity)) {
                 overlayActive.value = true
                 return@launch
             }
@@ -333,7 +360,7 @@ class MainActivity : AppCompatActivity() {
         if (!batteryUnrestricted()) {
             onMessage(getString(R.string.permission_battery_body))
         }
-        OverlayService.start(this, clamped)
+        OverlayLauncher.start(this, clamped)
         overlayActive.value = true
     }
 
@@ -360,26 +387,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun canDrawOverlays(): Boolean = PermissionIntents.canDrawOverlays(this)
 
-    private fun notificationsGranted(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
-        return ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.POST_NOTIFICATIONS,
-        ) == PackageManager.PERMISSION_GRANTED
-    }
+    private fun notificationsGranted(): Boolean =
+        OverlayLauncher.notificationsGranted(this)
 
     private fun batteryUnrestricted(): Boolean =
         PermissionIntents.isIgnoringBatteryOptimizations(this)
 
-    private fun isOverlayServiceRunning(): Boolean {
-        val manager = getSystemService(android.app.ActivityManager::class.java) ?: return false
-        @Suppress("DEPRECATION")
-        return manager.getRunningServices(Int.MAX_VALUE).any { info ->
-            info.service.className == OverlayService::class.java.name
-        }
-    }
-
     companion object {
+        const val EXTRA_OPEN_PERMISSIONS = "cz.darken.app.extra.OPEN_PERMISSIONS"
+
         private const val KEY_OVERLAY_DISABLED_BY_USER = "overlay_disabled_by_user"
         private const val KEY_COLOR_FILTER_EXPANDED = "color_filter_expanded"
     }

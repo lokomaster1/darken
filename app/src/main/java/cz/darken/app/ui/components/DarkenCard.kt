@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import cz.darken.app.ui.DarkenPalette
 @Composable
 fun DarkenCard(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(20.dp),
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val shape = RoundedCornerShape(20.dp)
@@ -34,7 +36,7 @@ fun DarkenCard(
                 ),
             )
             .border(1.dp, Color(0xFF2A3548), shape)
-            .padding(20.dp),
+            .padding(contentPadding),
         content = content,
     )
 }

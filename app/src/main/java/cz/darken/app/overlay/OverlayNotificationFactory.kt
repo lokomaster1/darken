@@ -25,7 +25,7 @@ object OverlayNotificationFactory {
         )
 
         return if (mode == PreferencesRepository.NOTIF_INTERACTIVE) {
-            buildInteractive(context, openApp, defaultDimLevel)
+            buildInteractive(context, openApp, currentDimLevel, defaultDimLevel)
         } else {
             buildMinimal(context, openApp)
         }
@@ -48,6 +48,7 @@ object OverlayNotificationFactory {
     private fun buildInteractive(
         context: Context,
         openApp: PendingIntent,
+        currentDimLevel: Int,
         defaultDimLevel: Int,
     ): NotificationCompat.Builder {
         val remoteViews = RemoteViews(context.packageName, R.layout.notification_interactive)
@@ -56,13 +57,14 @@ object OverlayNotificationFactory {
         bindAction(remoteViews, context, R.id.action_minus5, OverlayService.ACTION_ADJUST, -5, 10)
         bindAction(remoteViews, context, R.id.action_minus1, OverlayService.ACTION_ADJUST, -1, 11)
         bindAction(remoteViews, context, R.id.action_default, OverlayService.ACTION_APPLY_DEFAULT, 0, 12)
-        bindAction(remoteViews, context, R.id.action_exit, OverlayService.ACTION_EXIT_APP, 0, 13)
+        bindAction(remoteViews, context, R.id.action_stop, OverlayService.ACTION_STOP, 0, 13)
         bindAction(remoteViews, context, R.id.action_plus1, OverlayService.ACTION_ADJUST, 1, 14)
         bindAction(remoteViews, context, R.id.action_plus5, OverlayService.ACTION_ADJUST, 5, 15)
 
         return NotificationCompat.Builder(context, OverlayService.CHANNEL_INTERACTIVE)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_title))
+            .setContentText(context.getString(R.string.notification_text_level, currentDimLevel))
             .setContentIntent(openApp)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setCustomContentView(remoteViews)

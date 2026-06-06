@@ -48,4 +48,14 @@ object PermissionIntents {
         }
         return Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
     }
+
+    fun qsTileSettings(context: Context): Intent {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val intent = Intent("android.settings.action.QS_TILE_PREFERENCES")
+            if (intent.resolveActivity(context.packageManager) != null) {
+                return intent
+            }
+        }
+        return Intent(Settings.ACTION_SETTINGS)
+    }
 }
