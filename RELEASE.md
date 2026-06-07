@@ -45,6 +45,12 @@ gh release create v1.1.1 /tmp/darken-1.1.1.apk \
   --notes "Screen dimming overlay. GPL-3.0. No Internet, no analytics."
 ```
 
+## Release notes (GitHub)
+
+There is **no** release-notes template file in this repo (no `.github/release.yml`). If you publish a release **without** writing a description and click **Generate release notes** on GitHub, the text is built from **git commits** between tags — including any `Co-authored-by:` trailers stored in commit messages. That is why a release can mention tooling even though `CHANGELOG.md` and the app source do not.
+
+**Recommended:** copy the matching `## X.Y.Z` section from [`CHANGELOG.md`](CHANGELOG.md) into the release description (as for v1.2.2). Write the notes by hand; avoid **Generate release notes** if you do not want commit metadata in the description.
+
 ## Before each release
 
 1. Bump `versionCode` / `versionName` in `app/build.gradle.kts`  
