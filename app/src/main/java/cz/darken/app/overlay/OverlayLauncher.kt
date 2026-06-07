@@ -9,7 +9,6 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import cz.darken.app.MainActivity
 import cz.darken.app.data.PreferencesRepository
-import cz.darken.app.tile.DarkenTileService
 import cz.darken.app.util.PermissionIntents
 
 object OverlayLauncher {
@@ -28,6 +27,10 @@ object OverlayLauncher {
         }
     }
 
+    /** True when overlay service is running and dimming is active (not mid-shutdown). */
+    fun isOverlayActive(context: Context): Boolean =
+        isOverlayRunning(context) && OverlayService.lastKnownDimLevel != null
+
     fun canStart(context: Context): Boolean =
         PermissionIntents.canDrawOverlays(context) && notificationsGranted(context)
 
@@ -36,12 +39,10 @@ object OverlayLauncher {
         val level = (dimLevel ?: preferences.defaultDimLevelBlocking())
             .coerceIn(PreferencesRepository.MIN_DIM, PreferencesRepository.MAX_DIM)
         OverlayService.start(context, level)
-        DarkenTileService.requestTileUpdate(context)
     }
 
     fun stop(context: Context) {
         OverlayService.stop(context)
-        DarkenTileService.requestTileUpdate(context)
     }
 
     fun toggle(context: Context): ToggleResult {

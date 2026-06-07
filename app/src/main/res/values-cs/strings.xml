@@ -34,8 +34,13 @@
     <string name="settings_notification_hint">Interaktivní ovládání se zobrazí v oznamovací roletce, když je překrytí aktivní.</string>
     <string name="settings_qs_tile">Dlaždice rychlého nastavení</string>
     <string name="qs_tile_label">Darken</string>
-    <string name="settings_qs_tile_hint">Přidejte dlaždici Darken do rychlého nastavení pro zapnutí/vypnutí bez otevření aplikace. Upravit dlaždice → Darken → přetáhnout do panelu.</string>
-    <string name="settings_qs_tile_button">Otevřít nastavení dlaždic</string>
+    <string name="qs_tile_subtitle_on">Zapnuto</string>
+    <string name="qs_tile_subtitle_off">Vypnuto</string>
+    <string name="settings_qs_tile_hint">Klepněte níže a přidejte dlaždici Darken do rychlého nastavení pro zapnutí/vypnutí bez otevření aplikace.</string>
+    <string name="settings_qs_tile_hint_legacy">Na Androidu 12 přidejte dlaždici ručně: rozbalte rychlé nastavení, klepněte na Upravit, najděte Darken a přetáhněte do panelu.</string>
+    <string name="settings_qs_tile_button">Přidat dlaždici</string>
+    <string name="settings_qs_tile_added_title">Dlaždice přidána</string>
+    <string name="settings_qs_tile_added_message">Dlaždice Darken je v rychlém nastavení. Rozbalte lištu a klepněte na ni pro zapnutí nebo vypnutí stmavení.</string>
     <string name="settings_about">O aplikaci</string>
     <string name="settings_privacy">Zásady ochrany soukromí</string>
     <string name="settings_privacy_subtitle">Co Darken dělá a nedělá s vašimi daty</string>

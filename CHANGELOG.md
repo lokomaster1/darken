@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.3
+
+- Quick Settings: “Add tile” button in settings (Android 13+, system placement dialog)
+- Android 12: manual tile add hint only (no broken settings link)
+- QS tile shows active/inactive state matching overlay (subtitle On/Off)
+- Fix: tile background updates on first tap while Quick Settings stays open
+- Long-press tile opens the app
+
 ## 1.2.2
 
 - Interactive notification redesign (larger controls, tap highlight, current level display)

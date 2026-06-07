@@ -99,7 +99,7 @@ class OverlayService : Service() {
         lastKnownDimLevel = null
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
-        DarkenTileService.requestTileUpdate(this)
+        DarkenTileService.refreshIfListening(this)
         MainActivityHolder.notifyOverlayStopped()
     }
 
@@ -145,7 +145,7 @@ class OverlayService : Service() {
 
         wm.addView(view, params)
         overlayView = view
-        DarkenTileService.requestTileUpdate(this)
+        DarkenTileService.refreshIfListening(this)
     }
 
     private fun applyOverlayAppearance() {

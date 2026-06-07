@@ -1,5 +1,6 @@
 package cz.darken.app.ui
 
+import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,8 +43,9 @@ fun SettingsDialog(
     onOpenPrivacy: () -> Unit,
     onOpenGithub: () -> Unit,
     onOpenContact: () -> Unit,
-    onOpenQsTiles: () -> Unit,
+    onAddQsTile: () -> Unit,
 ) {
+    val qsTilePlacementSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
     var draftLanguage by remember(savedLanguage) { mutableStateOf(savedLanguage) }
     var draftAutoStart by remember(savedAutoStartOnLaunch) { mutableStateOf(savedAutoStartOnLaunch) }
     var draftNotificationMode by remember(savedNotificationMode) { mutableStateOf(savedNotificationMode) }
@@ -151,15 +153,23 @@ fun SettingsDialog(
 
                     SectionTitle(stringResource(R.string.settings_qs_tile))
                     Text(
-                        text = stringResource(R.string.settings_qs_tile_hint),
+                        text = stringResource(
+                            if (qsTilePlacementSupported) {
+                                R.string.settings_qs_tile_hint
+                            } else {
+                                R.string.settings_qs_tile_hint_legacy
+                            },
+                        ),
                         style = MaterialTheme.typography.bodySmall,
                         color = DarkenPalette.TextMuted,
                     )
-                    TextButton(onClick = onOpenQsTiles) {
-                        Text(
-                            text = stringResource(R.string.settings_qs_tile_button),
-                            color = DarkenPalette.Gold,
-                        )
+                    if (qsTilePlacementSupported) {
+                        TextButton(onClick = onAddQsTile) {
+                            Text(
+                                text = stringResource(R.string.settings_qs_tile_button),
+                                color = DarkenPalette.Gold,
+                            )
+                        }
                     }
 
                     HorizontalDivider(

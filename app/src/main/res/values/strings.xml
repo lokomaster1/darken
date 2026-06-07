@@ -35,8 +35,13 @@
     <string name="settings_notification_hint">Interactive controls appear in the notification shade while overlay is active.</string>
     <string name="settings_qs_tile">Quick Settings tile</string>
     <string name="qs_tile_label">Darken</string>
-    <string name="settings_qs_tile_hint">Add the Darken tile in system Quick Settings to toggle dimming without opening the app. Edit tiles → find Darken → drag to the panel.</string>
-    <string name="settings_qs_tile_button">Open tile settings</string>
+    <string name="qs_tile_subtitle_on">On</string>
+    <string name="qs_tile_subtitle_off">Off</string>
+    <string name="settings_qs_tile_hint">Tap below to add the Darken tile to Quick Settings and toggle dimming without opening the app.</string>
+    <string name="settings_qs_tile_hint_legacy">On Android 12, add the tile manually: open Quick Settings, tap Edit, find Darken, and drag it to the panel.</string>
+    <string name="settings_qs_tile_button">Add tile</string>
+    <string name="settings_qs_tile_added_title">Tile added</string>
+    <string name="settings_qs_tile_added_message">The Darken tile is in Quick Settings. Pull down the shade and tap it to turn dimming on or off.</string>
     <string name="settings_about">About</string>
     <string name="settings_privacy">Privacy policy</string>
     <string name="settings_privacy_subtitle">What Darken does and does not do with your data</string>

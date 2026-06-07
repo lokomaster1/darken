@@ -27,6 +27,9 @@ import cz.darken.app.ui.CustomColorDialog
 import cz.darken.app.ui.DarkenTheme
 import cz.darken.app.ui.MainScreen
 import cz.darken.app.ui.PrivacyPolicyDialog
+import cz.darken.app.tile.DarkenTileService
+import cz.darken.app.tile.QsTilePlacement
+import cz.darken.app.ui.QsTileAddedDialog
 import cz.darken.app.ui.SettingsDialog
 import cz.darken.app.ui.SystemPermissionsDialog
 import cz.darken.app.util.PermissionIntents
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     private var showCustomColorDialog = mutableStateOf(false)
     private var showPrivacyPolicy = mutableStateOf(false)
     private var colorFilterExpanded = mutableStateOf(false)
+    private var showQsTileAddedDialog = mutableStateOf(false)
     private var permissionRefreshKey = mutableIntStateOf(0)
     private var overlayDisabledByUser = false
 
@@ -182,6 +186,10 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
+            if (showQsTileAddedDialog.value) {
+                QsTileAddedDialog(onDismiss = { showQsTileAddedDialog.value = false })
+            }
+
             if (settingsOpen) {
                 SettingsDialog(
                     savedLanguage = appLanguage,
@@ -195,11 +203,18 @@ class MainActivity : AppCompatActivity() {
                     onOpenPrivacy = { showPrivacyPolicy.value = true },
                     onOpenGithub = { openGithub() },
                     onOpenContact = { openContactEmail() },
-                    onOpenQsTiles = {
-                        startActivity(
-                            PermissionIntents.qsTileSettings(this)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                        )
+                    onAddQsTile = {
+                        QsTilePlacement.requestAddTile(this@MainActivity) { result ->
+                            when (result) {
+                                QsTilePlacement.Result.Added,
+                                QsTilePlacement.Result.AlreadyAdded,
+                                -> showQsTileAddedDialog.value = true
+                                QsTilePlacement.Result.NotAdded,
+                                QsTilePlacement.Result.Unsupported,
+                                QsTilePlacement.Result.Error,
+                                -> Unit
+                            }
+                        }
                     },
                 )
             }
@@ -305,6 +320,7 @@ class MainActivity : AppCompatActivity() {
     fun onOverlayStoppedExternally() {
         overlayActive.value = false
         overlayDisabledByUser = true
+        DarkenTileService.refreshIfListening(this)
     }
 
     private suspend fun syncDimLevelFromState() {
