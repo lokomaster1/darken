@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.6
+
+- Minor fixes
+
 ## 1.2.5
 
 - Minor fixes

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Inset from the 1x1 cell edge — small enough to work on dense grids and labeled icons. -->
-    <dimen name="widget_cell_inset">4dp</dimen>
-    <dimen name="widget_inner_padding">5dp</dimen>
-    <dimen name="widget_icon_size">24dp</dimen>
-    <!-- Matches launcher widget masking on Android 12+ (minSdk 31). -->
-    <dimen name="widget_corner_radius">@*android:dimen/system_app_widget_background_radius</dimen>
+    <!-- Low declared minimum so 1×1 fits dense grids (e.g. 5×8). Launchers map targetCell* + this to cell count. -->
+    <dimen name="widget_min_cell">28dp</dimen>
+    <!-- Up to ~4×4 cells where the launcher supports resize. -->
+    <dimen name="widget_max_resize">250dp</dimen>
+    <dimen name="widget_cell_inset">0dp</dimen>
+    <dimen name="widget_inner_padding">1dp</dimen>
+    <!-- Default; runtime size scales with allocated widget area (~96% of shorter side). -->
+    <dimen name="widget_icon_size">34dp</dimen>
+    <dimen name="widget_corner_radius">12dp</dimen>
 </resources>
