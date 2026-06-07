@@ -26,7 +26,7 @@ Latest versions of Android system have integrated similar feature called "extra 
 - Permission **Display over other apps** (overlay)
 - **Notifications** on Android 13+ (for the service icon)
 
-## Certificate fingerprint (non-fdroid version only):
+## Certificate fingerprint (exclude f-droid version):
 
 SHA256: 19:7F:C8:BF:5A:D8:A8:E9:D0:76:CD:5B:DB:7C:9F:BA:98:32:42:01:BD:8A:5E:30:FC:FD:ED:93:15:F0:85:D7
 
