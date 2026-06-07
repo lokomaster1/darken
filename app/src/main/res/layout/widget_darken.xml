@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_host"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_cell_inset"
+    android:theme="@android:style/Theme.DeviceDefault.DayNight">
+
+    <FrameLayout
+        android:id="@android:id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_background_inactive"
+        android:padding="@dimen/widget_inner_padding">
+
+        <ImageView
+            android:id="@+id/widget_icon"
+            android:layout_width="@dimen/widget_icon_size"
+            android:layout_height="@dimen/widget_icon_size"
+            android:layout_gravity="center"
+            android:contentDescription="@string/widget_label"
+            android:src="@drawable/ic_widget_moon" />
+    </FrameLayout>
+</FrameLayout>

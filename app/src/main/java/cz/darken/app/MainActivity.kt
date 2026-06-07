@@ -23,11 +23,11 @@ import cz.darken.app.locale.LocaleHelper
 import cz.darken.app.overlay.OverlayLauncher
 import cz.darken.app.overlay.OverlayService
 import cz.darken.app.overlay.OverlayTint
+import cz.darken.app.overlay.OverlayUiSync
 import cz.darken.app.ui.CustomColorDialog
 import cz.darken.app.ui.DarkenTheme
 import cz.darken.app.ui.MainScreen
 import cz.darken.app.ui.PrivacyPolicyDialog
-import cz.darken.app.tile.DarkenTileService
 import cz.darken.app.tile.QsTilePlacement
 import cz.darken.app.ui.QsTileAddedDialog
 import cz.darken.app.ui.SettingsDialog
@@ -320,7 +320,7 @@ class MainActivity : AppCompatActivity() {
     fun onOverlayStoppedExternally() {
         overlayActive.value = false
         overlayDisabledByUser = true
-        DarkenTileService.refreshIfListening(this)
+        OverlayUiSync.notifyOverlayStateChanged(this)
     }
 
     private suspend fun syncDimLevelFromState() {

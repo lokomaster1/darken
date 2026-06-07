@@ -41,6 +41,8 @@
     <string name="settings_qs_tile_button">Přidat dlaždici</string>
     <string name="settings_qs_tile_added_title">Dlaždice přidána</string>
     <string name="settings_qs_tile_added_message">Dlaždice Darken je v rychlém nastavení. Rozbalte lištu a klepněte na ni pro zapnutí nebo vypnutí stmavení.</string>
+    <string name="widget_label">Darken</string>
+    <string name="widget_description">Zapne nebo vypne stmavení displeje.</string>
     <string name="settings_about">O aplikaci</string>
     <string name="settings_privacy">Zásady ochrany soukromí</string>
     <string name="settings_privacy_subtitle">Co Darken dělá a nedělá s vašimi daty</string>

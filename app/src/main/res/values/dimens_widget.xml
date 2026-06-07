@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Inset from the 1x1 cell edge — small enough to work on dense grids and labeled icons. -->
+    <dimen name="widget_cell_inset">4dp</dimen>
+    <dimen name="widget_inner_padding">5dp</dimen>
+    <dimen name="widget_icon_size">24dp</dimen>
+    <!-- Matches launcher widget masking on Android 12+ (minSdk 31). -->
+    <dimen name="widget_corner_radius">@*android:dimen/system_app_widget_background_radius</dimen>
+</resources>

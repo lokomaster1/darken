@@ -41,6 +41,8 @@
     <string name="settings_qs_tile_button">Add tile</string>
     <string name="settings_qs_tile_added_title">Tile added</string>
     <string name="settings_qs_tile_added_message">The Darken tile is in Quick Settings. Pull down the shade and tap it to turn dimming on or off.</string>
+    <string name="widget_label">Darken</string>
+    <string name="widget_description">Toggle screen dimming on or off.</string>
     <string name="settings_about">About</string>
     <string name="settings_privacy">Privacy policy</string>
     <string name="settings_privacy_subtitle">What Darken does and does not do with your data</string>

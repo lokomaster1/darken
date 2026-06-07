@@ -20,7 +20,6 @@ import cz.darken.app.MainActivity
 import cz.darken.app.MainActivityHolder
 import cz.darken.app.R
 import cz.darken.app.data.PreferencesRepository
-import cz.darken.app.tile.DarkenTileService
 
 class OverlayService : Service() {
 
@@ -99,7 +98,7 @@ class OverlayService : Service() {
         lastKnownDimLevel = null
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
-        DarkenTileService.refreshIfListening(this)
+        OverlayUiSync.notifyOverlayStateChanged(this)
         MainActivityHolder.notifyOverlayStopped()
     }
 
@@ -145,7 +144,7 @@ class OverlayService : Service() {
 
         wm.addView(view, params)
         overlayView = view
-        DarkenTileService.refreshIfListening(this)
+        OverlayUiSync.notifyOverlayStateChanged(this)
     }
 
     private fun applyOverlayAppearance() {

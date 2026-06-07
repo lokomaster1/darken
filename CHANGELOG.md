@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.4
+
+- Home screen widget (1×1): toggle dimming on/off from the launcher
+- Widget active/inactive state synced with overlay (gold frame when on)
+- System widget corner radius and compact inset layout (Android 12+)
+- Shared refresh for widget and Quick Settings tile
+
 ## 1.2.3
 
 - Quick Settings: “Add tile” button in settings (Android 13+, system placement dialog)
