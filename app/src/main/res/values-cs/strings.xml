@@ -52,6 +52,7 @@
     <string name="settings_contact_email">diskus.barge163@simplelogin.com</string>
     <string name="settings_ok">OK</string>
     <string name="settings_cancel">Zrušit</string>
+    <string name="settings_close">Zavřít</string>
     <string name="language_system">Podle systému</string>
     <string name="language_czech">Čeština</string>
     <string name="language_english">English</string>

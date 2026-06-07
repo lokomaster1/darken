@@ -53,6 +53,7 @@
     <string name="settings_contact_email">diskus.barge163@simplelogin.com</string>
     <string name="settings_ok">OK</string>
     <string name="settings_cancel">Cancel</string>
+    <string name="settings_close">Close</string>
     <string name="language_system">System default</string>
     <string name="language_czech">Čeština</string>
     <string name="language_english">English</string>

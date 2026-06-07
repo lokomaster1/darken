@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.5
+
+- Minor fixes
+
 ## 1.2.4
 
 - Home screen widget (1×1): toggle dimming on/off from the launcher

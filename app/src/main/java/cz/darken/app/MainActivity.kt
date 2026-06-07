@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 
         overlayDisabledByUser = savedInstanceState?.getBoolean(KEY_OVERLAY_DISABLED_BY_USER, false) ?: false
         colorFilterExpanded.value = savedInstanceState?.getBoolean(KEY_COLOR_FILTER_EXPANDED, false) ?: false
+        showSettingsDialog.value = savedInstanceState?.getBoolean(KEY_SETTINGS_DIALOG, false) ?: false
 
         if (intent?.getBooleanExtra(EXTRA_OPEN_PERMISSIONS, false) == true) {
             showPermissionsDialog.value = true
@@ -192,13 +193,12 @@ class MainActivity : AppCompatActivity() {
 
             if (settingsOpen) {
                 SettingsDialog(
-                    savedLanguage = appLanguage,
-                    savedAutoStartOnLaunch = autoStartOnLaunch,
-                    savedNotificationMode = notificationMode,
-                    onConfirm = { language, autoStart, notifMode ->
-                        applySettings(language, autoStart, notifMode)
-                        showSettingsDialog.value = false
-                    },
+                    language = appLanguage,
+                    autoStartOnLaunch = autoStartOnLaunch,
+                    notificationMode = notificationMode,
+                    onLanguageChange = { applyLanguage(it) },
+                    onAutoStartChange = { applyAutoStart(it) },
+                    onNotificationModeChange = { applyNotificationMode(it) },
                     onDismiss = { showSettingsDialog.value = false },
                     onOpenPrivacy = { showPrivacyPolicy.value = true },
                     onOpenGithub = { openGithub() },
@@ -285,6 +285,7 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putBoolean(KEY_OVERLAY_DISABLED_BY_USER, overlayDisabledByUser)
         outState.putBoolean(KEY_COLOR_FILTER_EXPANDED, colorFilterExpanded.value)
+        outState.putBoolean(KEY_SETTINGS_DIALOG, showSettingsDialog.value)
     }
 
     override fun onStart() {
@@ -329,24 +330,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun applySettings(
-        language: String,
-        autoStartOnLaunch: Boolean,
-        notificationMode: String,
-    ) {
+    private fun applyLanguage(language: String) {
         lifecycleScope.launch {
             val previousLanguage = preferences.appLanguage.first()
+            if (previousLanguage == language) return@launch
             preferences.setAppLanguage(language)
-            preferences.setAutoStartOnLaunch(autoStartOnLaunch)
-            preferences.setNotificationMode(notificationMode)
+            LocaleHelper.apply(language)
+        }
+    }
 
+    private fun applyAutoStart(enabled: Boolean) {
+        lifecycleScope.launch {
+            preferences.setAutoStartOnLaunch(enabled)
+        }
+    }
+
+    private fun applyNotificationMode(mode: String) {
+        lifecycleScope.launch {
+            val previousMode = preferences.notificationMode.first()
+            if (previousMode == mode) return@launch
+            preferences.setNotificationMode(mode)
             if (overlayActive.value) {
                 OverlayService.refreshNotification(this@MainActivity)
-            }
-
-            if (previousLanguage != language) {
-                LocaleHelper.apply(language)
-                recreate()
             }
         }
     }
@@ -419,5 +424,6 @@ class MainActivity : AppCompatActivity() {
 
         private const val KEY_OVERLAY_DISABLED_BY_USER = "overlay_disabled_by_user"
         private const val KEY_COLOR_FILTER_EXPANDED = "color_filter_expanded"
+        private const val KEY_SETTINGS_DIALOG = "settings_dialog"
     }
 }
