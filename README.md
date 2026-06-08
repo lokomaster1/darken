@@ -8,6 +8,9 @@ I couldn’t really find a modern, open-source Android app that does this proper
 
 Latest versions of Android system have integrated similar feature called "extra dim", and that is BEST, most secure solution you can use, and is fully recommended. However, you possibly can appreciate this app, if system brightness is still too high for you, or if you prefer some other app features like custom color tint
 
+| | |
+|:---:|:---:|
+| ![Darken — main screen](screenshots/SCRN1.png) | ![Darken — settings](screenshots/SCRN2.png) |
 
 ## Features
 
