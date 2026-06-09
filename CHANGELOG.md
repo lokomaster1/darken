@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.7
+
+- Custom color: rainbow swatch opens a hue slider for a wider choice of tints
+- Live color preview while dragging the slider; choice is saved when you release
+- Hex field: fixed `#` prefix, uppercase digits, smoother typing
+- Fix: hue slider no longer jumps to the start at the far right
+
 ## 1.2.6
 
 - Minor fixes
