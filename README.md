@@ -10,7 +10,7 @@ Latest versions of Android system have integrated similar feature called "extra 
 
 For a Simplified Chinese translation of this README, see [README.zh-CN.md](README.zh-CN.md).
 
-[![Get it on Obtainium](screenshots/badge_obtainium.png)](https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fadd%3Furl%3Dhttps%253A%252F%252Fgithub.com%252Flokomaster1%252Fdarken)
+<a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fadd%3Furl%3Dhttps%253A%252F%252Fgithub.com%252Flokomaster1%252Fdarken"><img src="screenshots/badge_obtainium.png" alt="Get it on Obtainium" width="452" height="175"></a>
 
 | | |
 |:---:|:---:|
