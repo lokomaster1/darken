@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Darken</string>
-    <string name="fgs_special_use_description">保持屏幕滤镜持续显示。</string>
     <string name="language_chinese_simplified">简体中文</string>
     <string name="status_prefix">状态：</string>
     <string name="status_active">已开启</string>
