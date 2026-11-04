@@ -68,7 +68,7 @@ AndroidX / Jetpack Compose / DataStore（Apache License 2.0），已链接到应
 
 ## 开发者说明
 
-代码在 **[Cursor](https://cursor.com)**（AI 辅助 IDE）的帮助下编写。感谢 Cursor 团队以及背后的模型。
+代码在 **[Cursor](https://cursor.com)**（AI 辅助 IDE）的帮助下编写。感谢 Cursor 团队以及背后的模型。文档也在 [ChatGPT](https://chatgpt.com) 的帮助下进行了更新。
 
 ## 更多信息
 

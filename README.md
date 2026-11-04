@@ -72,7 +72,7 @@ AndroidX / Jetpack Compose / DataStore (Apache License 2.0), linked into the app
 
 ## Developer note
 
-Code was written with assistance from **[Cursor](https://cursor.com)** (AI-assisted IDE). Thank you to the Cursor team and the models behind it
+Code was written with assistance from **[Cursor](https://cursor.com)** (AI-assisted IDE). Thank you to the Cursor team and the models behind it. Documentation was also updated with assistance from [ChatGPT](https://chatgpt.com).
 
 
 ## More info
@@ -98,4 +98,4 @@ Sestavení: `./gradlew assembleDebug`
 Soukromí: [PRIVACY.md](PRIVACY.md)  
 APK na GitHub: viz [RELEASE.md](RELEASE.md)
 
-**Vývoj:** Kód vznikal s pomocí [Cursor](https://cursor.com) (IDE s AI). Děkuji tvůrcům Cursoru.
+**Vývoj:** Kód vznikal s pomocí [Cursor](https://cursor.com) (IDE s AI). Děkuji tvůrcům Cursoru. Dokumentace byla upravena také s pomocí [ChatGPT](https://chatgpt.com).
