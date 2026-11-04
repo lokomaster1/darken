@@ -2,7 +2,7 @@
 
 Darken 是一款免费的开源 Android 应用，可通过全屏覆盖层调暗屏幕。无广告、无分析功能，也不需要 Internet 权限。
 
-<a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fadd%3Furl%3Dhttps%253A%252F%252Fgithub.com%252Flokomaster1%252Fdarken"><img src="screenshots/badge_obtainium.png" alt="在 Obtainium 中获取" width="323" height="125"></a>
+<a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/lokomaster1/darken"><img src="screenshots/badge_obtainium.png" alt="在 Obtainium 中获取" width="323" height="125"></a>
 
 ## 为什么开发这个应用
 

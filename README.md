@@ -37,7 +37,7 @@ Latest versions of Android system have integrated similar feature called "extra 
 SHA256: 19:7F:C8:BF:5A:D8:A8:E9:D0:76:CD:5B:DB:7C:9F:BA:98:32:42:01:BD:8A:5E:30:FC:FD:ED:93:15:F0:85:D7
 
 ## Add app directly to Obtanium
-<a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fadd%3Furl%3Dhttps%253A%252F%252Fgithub.com%252Flokomaster1%252Fdarken"><img src="screenshots/badge_obtainium.png" alt="Get it on Obtainium" width="323" height="125"></a>
+<a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/lokomaster1/darken"><img src="screenshots/badge_obtainium.png" alt="Get it on Obtainium" width="323" height="125"></a>
 
 ## Privacy
 
