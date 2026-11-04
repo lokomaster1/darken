@@ -115,6 +115,8 @@ fun MainScreen(
                 HeaderCard(
                     overlayActive = overlayActive,
                     canDrawOverlays = canDrawOverlays,
+                    enabled = canDrawOverlays && notificationsGranted,
+                    onToggle = onToggleOverlay,
                 )
 
                 if (!canDrawOverlays) {
@@ -243,10 +245,16 @@ private val HeaderCardContentHeight = 124.dp
 private fun HeaderCard(
     overlayActive: Boolean,
     canDrawOverlays: Boolean,
+    enabled: Boolean,
+    onToggle: (Boolean) -> Unit,
 ) {
     val titleOffset = (HeaderIconSize + HeaderIconTitleGap) / 2
 
-    DarkenCard(modifier = Modifier.fillMaxWidth()) {
+    DarkenCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = enabled) { onToggle(!overlayActive) },
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()

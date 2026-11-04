@@ -1,0 +1,1 @@
+Added Simplified Chinese, synchronized notification controls with the open app, stopped dimming when the app is dismissed from Recents, and improved the status card and custom color swatch.

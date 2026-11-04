@@ -1,0 +1,7 @@
+Darken dims the screen with a full-screen overlay when the system brightness is still too high. You can adjust the dimming level from 0 to 99% and choose a gray, warm brown, red, or custom color tint.
+
+Toggle the overlay from the app, a Quick Settings tile, or a home screen widget. Optional notification controls let you adjust dimming while it is active. Settings stay on your device.
+
+Darken requires Android 12 or newer and the Display over other apps permission. It has no ads, analytics, accounts, or Internet permission. If your device provides Android's built-in Extra dim feature, that is the most integrated choice; Darken offers additional tint and control options.
+
+Some security-sensitive apps may block interaction while an overlay is active. Disable the overlay when using those apps.

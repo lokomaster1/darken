@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.0
+
+- Added Simplified Chinese UI translation
+- Synchronized notification dimming controls with the open app
+- Stopped the overlay when the app is dismissed from Recents
+- Made the status card toggle dimming
+- Show a rainbow swatch for the inactive custom color option
+- Added F-Droid metadata and Gradle distribution checksum
+
 ## 1.2.7
 
 - Custom color: rainbow swatch opens a hue slider for a wider choice of tints

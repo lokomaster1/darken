@@ -27,4 +27,10 @@ object MainActivityHolder {
             activityRef?.get()?.onOverlayStoppedExternally()
         }
     }
+
+    fun notifyDimLevelChanged(level: Int) {
+        activityRef?.get()?.runOnUiThread {
+            activityRef?.get()?.onOverlayDimLevelChanged(level)
+        }
+    }
 }

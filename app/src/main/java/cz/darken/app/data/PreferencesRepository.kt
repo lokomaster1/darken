@@ -97,7 +97,7 @@ class PreferencesRepository(private val context: Context) {
 
     suspend fun setAppLanguage(language: String) {
         val normalized = when (language) {
-            LANG_CS, LANG_EN -> language
+            LANG_CS, LANG_EN, LANG_ZH_CN -> language
             else -> LANG_SYSTEM
         }
         context.dataStore.edit { prefs ->
@@ -153,6 +153,7 @@ class PreferencesRepository(private val context: Context) {
         const val LANG_SYSTEM = "system"
         const val LANG_CS = "cs"
         const val LANG_EN = "en"
+        const val LANG_ZH_CN = "zh-CN"
 
         const val NOTIF_MINIMAL = "minimal"
         const val NOTIF_INTERACTIVE = "interactive"

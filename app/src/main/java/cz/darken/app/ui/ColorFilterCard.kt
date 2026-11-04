@@ -114,11 +114,7 @@ fun ColorFilterCard(
                     onClick = { onPresetSelected(OverlayTint.PRESET_RED) },
                 )
                 PresetColorOption(
-                    argb = if (tintPreset == OverlayTint.PRESET_CUSTOM) {
-                        resolvedTintArgb
-                    } else {
-                        OverlayTint.customPalette.first()
-                    },
+                    argb = resolvedTintArgb,
                     label = stringResource(R.string.tint_custom),
                     selected = tintPreset == OverlayTint.PRESET_CUSTOM,
                     enabled = enabled,
@@ -143,12 +139,20 @@ private fun PresetColorOption(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        ColorSwatch(
-            argb = argb,
-            selected = selected,
-            onClick = { if (enabled) onClick() },
-            modifier = Modifier.size(if (isCustom) 40.dp else 44.dp),
-        )
+        if (isCustom && !selected) {
+            RainbowSwatch(
+                selected = false,
+                onClick = { if (enabled) onClick() },
+                modifier = Modifier.size(40.dp),
+            )
+        } else {
+            ColorSwatch(
+                argb = argb,
+                selected = selected,
+                onClick = { if (enabled) onClick() },
+                modifier = Modifier.size(if (isCustom) 40.dp else 44.dp),
+            )
+        }
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,

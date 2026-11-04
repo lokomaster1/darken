@@ -93,6 +93,11 @@ class OverlayService : Service() {
         super.onDestroy()
     }
 
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        tearDown()
+        super.onTaskRemoved(rootIntent)
+    }
+
     private fun tearDown() {
         removeOverlay()
         lastKnownDimLevel = null
@@ -115,6 +120,7 @@ class OverlayService : Service() {
         lastKnownDimLevel = currentDimLevel
         applyOverlayAppearance()
         refreshNotification()
+        MainActivityHolder.notifyDimLevelChanged(currentDimLevel)
     }
 
     private fun showOverlay(dimLevel: Int) {

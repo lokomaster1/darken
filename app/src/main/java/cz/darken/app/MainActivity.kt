@@ -324,6 +324,10 @@ class MainActivity : AppCompatActivity() {
         OverlayUiSync.notifyOverlayStateChanged(this)
     }
 
+    fun onOverlayDimLevelChanged(level: Int) {
+        dimLevelState.intValue = level
+    }
+
     private suspend fun syncDimLevelFromState() {
         if (overlayActive.value) {
             OverlayService.lastKnownDimLevel?.let { dimLevelState.intValue = it }

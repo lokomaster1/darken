@@ -225,13 +225,13 @@ fun ColorSwatch(
 }
 
 @Composable
-private fun RainbowSwatch(
+internal fun RainbowSwatch(
     selected: Boolean,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier.size(36.dp),
 ) {
     Box(
-        modifier = Modifier
-            .size(36.dp)
+        modifier = modifier
             .clip(CircleShape)
             .background(
                 Brush.sweepGradient(

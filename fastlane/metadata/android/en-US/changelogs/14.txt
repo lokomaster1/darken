@@ -1,0 +1,1 @@
+Custom color hue slider with live preview. Improved hex input and fixed a slider jump at the far right.

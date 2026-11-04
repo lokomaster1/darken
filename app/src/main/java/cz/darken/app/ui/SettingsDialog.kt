@@ -122,6 +122,11 @@ fun SettingsDialog(
                             selected = language == PreferencesRepository.LANG_EN,
                             onClick = { onLanguageChange(PreferencesRepository.LANG_EN) },
                         )
+                        SelectOption(
+                            label = stringResource(R.string.language_chinese_simplified),
+                            selected = language == PreferencesRepository.LANG_ZH_CN,
+                            onClick = { onLanguageChange(PreferencesRepository.LANG_ZH_CN) },
+                        )
                     }
 
                     HorizontalDivider(
