@@ -10,6 +10,10 @@ Latest versions of Android system have integrated similar feature called "extra 
 
 For a Simplified Chinese translation of this README, see [README.zh-CN.md](README.zh-CN.md).
 
+[Add Darken to Obtainium](https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fapp%2F%257B%2522id%2522%253A%2522cz.darken.app%2522%252C%2522url%2522%253A%2522https%253A%252F%252Fgithub.com%252Flokomaster1%252Fdarken%2522%252C%2522author%2522%253A%2522lokomaster1%2522%252C%2522name%2522%253A%2522Darken%2522%257D)
+
+Or use the direct [Obtainium deeplink](obtainium://app/%7B%22id%22%3A%22cz.darken.app%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Flokomaster1%2Fdarken%22%2C%22author%22%3A%22lokomaster1%22%2C%22name%22%3A%22Darken%22%7D) if Obtainium is already installed.
+
 | | |
 |:---:|:---:|
 | ![Darken — main screen](screenshots/SCRN1.png) | ![Darken — settings](screenshots/SCRN2.png) |
