@@ -59,7 +59,6 @@ fun MainScreen(
     hasSavedDefault: Boolean,
     overlayActive: Boolean,
     canDrawOverlays: Boolean,
-    notificationsGranted: Boolean,
     batteryUnrestricted: Boolean,
     onDimLevelChange: (Int) -> Unit,
     onToggleOverlay: (Boolean) -> Unit,
@@ -115,7 +114,7 @@ fun MainScreen(
                 HeaderCard(
                     overlayActive = overlayActive,
                     canDrawOverlays = canDrawOverlays,
-                    enabled = canDrawOverlays && notificationsGranted,
+                    enabled = canDrawOverlays,
                     onToggle = onToggleOverlay,
                 )
 
@@ -138,7 +137,7 @@ fun MainScreen(
 
                 ToggleCard(
                     overlayActive = overlayActive,
-                    enabled = canDrawOverlays && notificationsGranted,
+                    enabled = canDrawOverlays,
                     onToggle = onToggleOverlay,
                 )
 

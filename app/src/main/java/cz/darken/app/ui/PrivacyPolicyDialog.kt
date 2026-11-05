@@ -111,17 +111,6 @@ fun PrivacyPolicyDialog(
                         color = DarkenPalette.Gold,
                     )
                 }
-                if (!firstRun) {
-                    TextButton(
-                        onClick = onDismiss,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(
-                            text = stringResource(R.string.settings_cancel),
-                            color = DarkenPalette.TextMuted,
-                        )
-                    }
-                }
             }
         }
     }

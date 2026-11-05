@@ -1,21 +1,17 @@
 package cz.darken.app
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.core.content.ContextCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import cz.darken.app.data.PreferencesRepository
@@ -50,12 +46,6 @@ class MainActivity : AppCompatActivity() {
     private var showQsTileAddedDialog = mutableStateOf(false)
     private var permissionRefreshKey = mutableIntStateOf(0)
     private var overlayDisabledByUser = false
-
-    private val notificationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) {
-        permissionRefreshKey.intValue++
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 val triggerRefresh = refreshKey
                 SystemPermissionsDialog(
                     overlayGranted = canDrawOverlays(),
-                    notificationsGranted = notificationsGranted(),
+                    notificationsEnabled = NotificationManagerCompat.from(this).areNotificationsEnabled(),
                     batteryUnrestricted = batteryUnrestricted(),
                     onOverlayClick = {
                         startActivity(
@@ -121,7 +111,9 @@ class MainActivity : AppCompatActivity() {
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         )
                     },
-                    onNotificationsClick = { requestNotificationsIfNeeded() },
+                    onNotificationsClick = {
+                        startActivity(PermissionIntents.notificationSettings(this))
+                    },
                     onBatteryClick = {
                         startActivity(
                             PermissionIntents.batteryOptimizationSettings(this)
@@ -226,7 +218,6 @@ class MainActivity : AppCompatActivity() {
                     hasSavedDefault = hasSavedDefault,
                     overlayActive = overlayOn,
                     canDrawOverlays = canDrawOverlays(),
-                    notificationsGranted = notificationsGranted(),
                     batteryUnrestricted = batteryUnrestricted(),
                     onDimLevelChange = { newLevel ->
                         dimLevelState.intValue = newLevel
@@ -383,23 +374,11 @@ class MainActivity : AppCompatActivity() {
             showPermissionsDialog.value = true
             return
         }
-        if (!notificationsGranted()) {
-            requestNotificationsIfNeeded()
-            return
-        }
         if (!batteryUnrestricted()) {
             onMessage(getString(R.string.permission_battery_body))
         }
         OverlayLauncher.start(this, clamped)
         overlayActive.value = true
-    }
-
-    private fun requestNotificationsIfNeeded() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            !notificationsGranted()
-        ) {
-            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
     }
 
     private fun openGithub() {
@@ -416,9 +395,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun canDrawOverlays(): Boolean = PermissionIntents.canDrawOverlays(this)
-
-    private fun notificationsGranted(): Boolean =
-        OverlayLauncher.notificationsGranted(this)
 
     private fun batteryUnrestricted(): Boolean =
         PermissionIntents.isIgnoringBatteryOptimizations(this)

@@ -35,6 +35,16 @@ object PermissionIntents {
             data = Uri.parse("package:${context.packageName}")
         }
 
+    fun notificationSettings(context: Context): Intent {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+        return if (intent.resolveActivity(context.packageManager) != null) {
+            intent
+        } else {
+            appDetailsSettings(context)
+        }
+    }
+
     fun requestIgnoreBatteryOptimizations(context: Context): Intent =
         Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
             data = Uri.parse("package:${context.packageName}")

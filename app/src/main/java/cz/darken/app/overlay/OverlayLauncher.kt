@@ -1,12 +1,8 @@
 package cz.darken.app.overlay
 
-import android.Manifest
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.core.content.ContextCompat
 import cz.darken.app.MainActivity
 import cz.darken.app.data.PreferencesRepository
 import cz.darken.app.util.PermissionIntents
@@ -32,7 +28,7 @@ object OverlayLauncher {
         isOverlayRunning(context) && OverlayService.lastKnownDimLevel != null
 
     fun canStart(context: Context): Boolean =
-        PermissionIntents.canDrawOverlays(context) && notificationsGranted(context)
+        PermissionIntents.canDrawOverlays(context)
 
     fun start(context: Context, dimLevel: Int? = null) {
         val preferences = PreferencesRepository(context.applicationContext)
@@ -64,13 +60,5 @@ object OverlayLauncher {
             putExtra(MainActivity.EXTRA_OPEN_PERMISSIONS, true)
         }
         context.startActivity(intent)
-    }
-
-    fun notificationsGranted(context: Context): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
-        return ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.POST_NOTIFICATIONS,
-        ) == PackageManager.PERMISSION_GRANTED
     }
 }

@@ -32,7 +32,7 @@
     <string name="settings_notification">Oznámení</string>
     <string name="settings_notification_minimal">Minimální (jen ikona)</string>
     <string name="settings_notification_interactive">Interaktivní (ovládání stmavení)</string>
-    <string name="settings_notification_hint">Interaktivní ovládání se zobrazí v oznamovací roletce, když je překrytí aktivní.</string>
+    <string name="settings_notification_hint">Od Androidu 13 můžete oznámení Darkenu povolit v systémových oprávněních. Interaktivní režim přidá ovládání stmavení do oznamovací lišty.</string>
     <string name="settings_qs_tile">Dlaždice rychlého nastavení</string>
     <string name="qs_tile_label">Darken</string>
     <string name="qs_tile_subtitle_on">Zapnuto</string>
@@ -64,6 +64,7 @@
     <string name="permissions_dialog_close">Zavřít</string>
     <string name="permission_status_ok">OK</string>
     <string name="permission_status_needed">potřeba</string>
+    <string name="permission_status_optional">volitelné</string>
     <string name="permission_app_details">Informace o aplikaci</string>
 
     <string name="permission_overlay_title">Zobrazovat přes ostatní aplikace</string>
@@ -72,8 +73,6 @@
     <string name="permission_overlay_button">Otevřít nastavení překrytí</string>
 
     <string name="permission_notification_title">Oznámení</string>
-    <string name="permission_notification_body">Od Androidu 13 pro minimální ikonu služby na pozadí.</string>
-    <string name="permission_notification_button">Povolit oznámení</string>
 
     <string name="permission_battery_title">Bez omezení baterie</string>
     <string name="permission_battery_body">Systém může jinak službu stmavení ukončit. Doporučeno na telefonech s agresivní úsporou energie.</string>
@@ -102,7 +101,7 @@
     <string name="privacy_section_network_title">Síť</string>
     <string name="privacy_section_network_body">Aplikace nevyžaduje přístup k internetu. Nemůže nahrávat ani stahovat data. Odkazy, které otevřete ručně (např. GitHub nebo e-mail z nastavení), řeší váš prohlížeč nebo poštovní klient mimo Darken.</string>
     <string name="privacy_section_permissions_title">Oprávnění</string>
-    <string name="privacy_section_permissions_body">Zobrazovat přes ostatní aplikace: nutné pro vykreslení stmavující vrstvy. Oznámení (Android 13+): pouze pro minimální ikonu služby na pozadí při aktivním stmavení. Výjimka z úspory baterie: volitelné doporučení, aby systém službu méně ukončoval. Darken používá jen to, co potřebuje ke stmavení; oprávnění můžete kdykoli změnit v nastavení systému.</string>
+    <string name="privacy_section_permissions_body">Zobrazovat přes ostatní aplikace: nutné pro vykreslení stmavující vrstvy. Oznámení (Android 13 a novější): volitelná pro zobrazení oznámení Darkenu a ovládání stmavení. Výjimka z úspory baterie: volitelné doporučení, aby systém službu méně ukončoval. Darken používá jen to, co potřebuje ke stmavení; oprávnění můžete kdykoli změnit v nastavení systému.</string>
     <string name="privacy_section_third_party_title">Knihovny třetích stran</string>
     <string name="privacy_section_third_party_body">Aplikace používá standardní open-source knihovny Androidu (např. AndroidX, Jetpack Compose) v APK. Běží lokálně v zařízení a Darken je nepoužívá ke sběru dat.</string>
     <string name="privacy_section_contact_title">Kontakt a zdrojový kód</string>

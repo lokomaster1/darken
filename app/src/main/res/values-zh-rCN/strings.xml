@@ -28,7 +28,7 @@
     <string name="settings_notification">通知</string>
     <string name="settings_notification_minimal">简洁模式（仅图标）</string>
     <string name="settings_notification_interactive">交互模式（调整变暗强度）</string>
-    <string name="settings_notification_hint">滤镜开启时，可在通知栏中使用交互控件。</string>
+    <string name="settings_notification_hint">在 Android 13 及更高版本上，可在系统权限中允许 Darken 通知。交互模式会在通知栏中添加变暗强度控件。</string>
     <string name="settings_qs_tile">快捷设置磁贴</string>
     <string name="qs_tile_label">Darken</string>
     <string name="qs_tile_subtitle_on">开启</string>
@@ -59,14 +59,13 @@
     <string name="permissions_dialog_close">关闭</string>
     <string name="permission_status_ok">已授权</string>
     <string name="permission_status_needed">需要授权</string>
+    <string name="permission_status_optional">可选</string>
     <string name="permission_app_details">应用信息</string>
     <string name="permission_overlay_title">在其他应用上层显示</string>
     <string name="permission_overlay_fallback">如果列表中没有 Darken，请打开下方“应用信息”→“特殊应用权限”→“在其他应用上层显示”。</string>
     <string name="permission_overlay_missing">尚无法开启滤镜，请先允许“在其他应用上层显示”。</string>
     <string name="permission_overlay_button">打开悬浮窗设置</string>
     <string name="permission_notification_title">通知</string>
-    <string name="permission_notification_body">在 Android 13 及更高版本上，后台服务需要显示通知图标。</string>
-    <string name="permission_notification_button">允许通知</string>
     <string name="permission_battery_title">不受电池限制</string>
     <string name="permission_battery_body">否则系统可能停止屏幕滤镜服务。建议在省电管理较严格的手机上开启。</string>
     <string name="permission_battery_button">关闭电池优化</string>
@@ -92,7 +91,7 @@
     <string name="privacy_section_network_title">网络</string>
     <string name="privacy_section_network_body">应用不请求互联网访问权限，无法上传或下载数据。您手动打开的链接（例如设置中的 GitHub 或电子邮件）由浏览器或邮件应用处理，不经过 Darken。</string>
     <string name="privacy_section_permissions_title">权限</string>
-    <string name="privacy_section_permissions_body">在其他应用上层显示：用于绘制屏幕滤镜。通知（Android 13 及更高版本）：仅用于滤镜开启时显示前台服务图标。忽略电池优化：可选，降低系统停止服务的可能性。Darken 只使用调暗屏幕所需的权限；您可以在系统设置中查看或撤销权限。</string>
+    <string name="privacy_section_permissions_body">在其他应用上层显示：用于绘制屏幕滤镜。通知（Android 13 及更高版本）：可选，用于显示 Darken 通知和变暗强度控件。忽略电池优化：可选，降低系统停止服务的可能性。Darken 只使用调暗屏幕所需的权限；您可以在系统设置中查看或撤销权限。</string>
     <string name="privacy_section_third_party_title">第三方库</string>
     <string name="privacy_section_third_party_body">应用使用随 APK 一同提供的标准 Android 开源库，例如 AndroidX 和 Jetpack Compose。这些库在设备本地运行，Darken 不会用它们收集数据。</string>
     <string name="privacy_section_contact_title">联系与源代码</string>

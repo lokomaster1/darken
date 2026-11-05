@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.1
+
+- Fixed a bright strip near the camera cutout when dimming full-screen apps.
+- Made Darken’s notification optional on Android 13 and newer. Existing notification permissions carry over on update.
+- Gave the Quick Settings tile a monochrome icon based on the Darken logo.
+- Replaced the Settings icon on the main screen with a symmetrical gear.
+- Simplified the privacy policy dialog by removing its duplicate dismiss button.
+
 ## 1.3.0
 
 - Added Simplified Chinese UI translation

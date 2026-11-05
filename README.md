@@ -24,13 +24,11 @@ Latest versions of Android system have integrated similar feature called "extra 
 - Simple ON/OFF widget
 - Czech, English, and Simplified Chinese UI
 - Settings stored only on device (DataStore)
-- Minimal foreground notification while overlay is active (Android 13+)
 
 ## Requirements
 
 - Android 12+ (API 31+)
 - Permission **Display over other apps** (overlay)
-- **Notifications** on Android 13+ (for the service icon)
 
 ## Certificate fingerprint (exclude f-droid version):
 
@@ -49,7 +47,7 @@ See [PRIVACY.md](PRIVACY.md). The in-app privacy policy uses the same content (S
 |------------|---------|
 | Display over other apps | Draw the dimming overlay |
 | Foreground service | Keep overlay running in background |
-| Notifications (13+) | Show minimal service notification |
+| Notifications (13+) | Optional. Show Darken’s notification and dimming controls |
 | Ignore battery optimizations | Optional; reduces risk of the system killing the service |
 
 The app does not use the Internet. Overlay permission is powerful; the project is fully open source so behavior can be audited.

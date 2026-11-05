@@ -12,8 +12,8 @@ android {
         applicationId = "cz.darken.app"
         minSdk = 31
         targetSdk = 34
-        versionCode = 15
-        versionName = "1.3.0"
+        versionCode = 16
+        versionName = "1.3.1"
 
         vectorDrawables {
             useSupportLibrary = true

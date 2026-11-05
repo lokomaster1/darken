@@ -37,7 +37,7 @@ object QsTilePlacement {
 
         val component = ComponentName(context, DarkenTileService::class.java)
         val label = context.getString(R.string.qs_tile_label)
-        val icon = Icon.createWithResource(context, R.drawable.ic_notification)
+        val icon = Icon.createWithResource(context, R.drawable.ic_qs_tile)
 
         statusBarManager.requestAddTileService(
             component,

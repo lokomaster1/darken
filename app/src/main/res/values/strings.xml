@@ -33,7 +33,7 @@
     <string name="settings_notification">Notification</string>
     <string name="settings_notification_minimal">Minimal (icon only)</string>
     <string name="settings_notification_interactive">Interactive (adjust dimming)</string>
-    <string name="settings_notification_hint">Interactive controls appear in the notification shade while overlay is active.</string>
+    <string name="settings_notification_hint">On Android 13 or later, enable Darken notifications in system permissions to see them in the notification shade. Interactive mode adds dimming controls.</string>
     <string name="settings_qs_tile">Quick Settings tile</string>
     <string name="qs_tile_label">Darken</string>
     <string name="qs_tile_subtitle_on">On</string>
@@ -65,6 +65,7 @@
     <string name="permissions_dialog_close">Close</string>
     <string name="permission_status_ok">OK</string>
     <string name="permission_status_needed">needed</string>
+    <string name="permission_status_optional">optional</string>
     <string name="permission_app_details">App info</string>
 
     <string name="permission_overlay_title">Display over other apps</string>
@@ -73,8 +74,6 @@
     <string name="permission_overlay_button">Open overlay settings</string>
 
     <string name="permission_notification_title">Notifications</string>
-    <string name="permission_notification_body">Required on Android 13+ for the minimal background service icon.</string>
-    <string name="permission_notification_button">Allow notifications</string>
 
     <string name="permission_battery_title">Unrestricted battery</string>
     <string name="permission_battery_body">Otherwise the system may stop the dimming service. Recommended on aggressive power-saving phones.</string>
@@ -103,7 +102,7 @@
     <string name="privacy_section_network_title">Network</string>
     <string name="privacy_section_network_body">The app does not request Internet access. It cannot upload or download data. Links you open manually (e.g. GitHub or email from Settings) are handled by your browser or mail app, outside Darken.</string>
     <string name="privacy_section_permissions_title">Permissions</string>
-    <string name="privacy_section_permissions_body">Display over other apps: required to draw the dimming overlay. Notifications (Android 13+): required only for the minimal foreground-service icon while dimming is active. Battery optimization exemption: optional recommendation so the system is less likely to stop the service. Darken uses only what it needs to dim the screen; you can review or revoke permissions in system settings.</string>
+    <string name="privacy_section_permissions_body">Display over other apps: required to draw the dimming overlay. Notifications (Android 13+): optional, for showing Darken’s notification and controls. Battery optimization exemption: optional recommendation so the system is less likely to stop the service. Darken uses only what it needs to dim the screen; you can review or revoke permissions in system settings.</string>
     <string name="privacy_section_third_party_title">Third-party libraries</string>
     <string name="privacy_section_third_party_body">The app uses standard Android open-source libraries (e.g. AndroidX, Jetpack Compose) shipped with the APK. They run locally on your device and are not used by Darken to collect data.</string>
     <string name="privacy_section_contact_title">Contact &amp; source code</string>

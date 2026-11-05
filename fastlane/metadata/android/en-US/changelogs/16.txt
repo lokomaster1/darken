@@ -1,0 +1,1 @@
+Fixed a bright strip near the camera cutout in full-screen apps. Dimming works without notification permission on Android 13 and newer. Updated the Quick Settings tile and the Settings icon.

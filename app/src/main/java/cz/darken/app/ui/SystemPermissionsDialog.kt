@@ -1,5 +1,6 @@
 package cz.darken.app.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,7 @@ import cz.darken.app.R
 @Composable
 fun SystemPermissionsDialog(
     overlayGranted: Boolean,
-    notificationsGranted: Boolean,
+    notificationsEnabled: Boolean,
     batteryUnrestricted: Boolean,
     onOverlayClick: () -> Unit,
     onNotificationsClick: () -> Unit,
@@ -54,7 +55,8 @@ fun SystemPermissionsDialog(
                 )
                 PermissionRow(
                     label = stringResource(R.string.permission_notification_title),
-                    granted = notificationsGranted,
+                    granted = notificationsEnabled,
+                    missingStatus = R.string.permission_status_optional,
                     onClick = onNotificationsClick,
                 )
                 PermissionRow(
@@ -81,6 +83,7 @@ fun SystemPermissionsDialog(
 private fun PermissionRow(
     label: String,
     granted: Boolean?,
+    @StringRes missingStatus: Int = R.string.permission_status_needed,
     onClick: () -> Unit,
 ) {
     Row(
@@ -102,7 +105,7 @@ private fun PermissionRow(
                 text = if (granted) {
                     stringResource(R.string.permission_status_ok)
                 } else {
-                    stringResource(R.string.permission_status_needed)
+                    stringResource(missingStatus)
                 },
                 color = if (granted) DarkenPalette.Gold else DarkenPalette.TextMuted,
                 style = MaterialTheme.typography.labelLarge,

@@ -22,7 +22,7 @@ Settings are saved locally only (default dimming level, filter color, language, 
 | Permission | Why |
 |------------|-----|
 | Display over other apps | Draw the dimming overlay |
-| Notifications (Android 13+) | Minimal foreground-service icon while dimming runs |
+| Notifications (Android 13+) | Optional. Show Darken’s notification and dimming controls |
 | Battery optimization (optional) | Reduce risk of the system stopping the service |
 
 You can review or revoke permissions in Android system settings.
