@@ -96,4 +96,23 @@
     <string name="privacy_section_third_party_body">应用使用随 APK 一同提供的标准 Android 开源库，例如 AndroidX 和 Jetpack Compose。这些库在设备本地运行，Darken 不会用它们收集数据。</string>
     <string name="privacy_section_contact_title">联系与源代码</string>
     <string name="privacy_section_contact_body">如有疑问或隐私方面的顾虑，请联系 diskus.barge163@simplelogin.com。源代码：https://github.com/lokomaster1/darken</string>
+    <string name="custom_color_save_to_slot">将所选颜色保存到：</string>
+    <string name="custom_color_presets">预设颜色</string>
+    <string name="custom_color_save_slot">保存到位置 %1$d</string>
+    <string name="custom_color_reset_slots">重置</string>
+    <string name="custom_color_slot_saved">颜色已保存到位置 %1$d</string>
+    <string name="custom_color_slots_reset">已恢复默认颜色</string>
+    <string name="palette_black">黑色</string>
+    <string name="palette_graphite">石墨色</string>
+    <string name="palette_coffee">咖啡色</string>
+    <string name="palette_burgundy">酒红色</string>
+    <string name="palette_terracotta">陶土色</string>
+    <string name="palette_honey">蜜色</string>
+    <string name="palette_amber">琥珀色</string>
+    <string name="palette_gold">金色</string>
+    <string name="palette_chestnut">栗色</string>
+    <string name="palette_plum">李紫色</string>
+    <string name="palette_forest">森林绿</string>
+    <string name="palette_slate">岩灰色</string>
+    <string name="custom_color_select_slot">选择位置 %1$d</string>
 </resources>

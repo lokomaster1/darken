@@ -106,4 +106,23 @@
     <string name="privacy_section_third_party_body">Aplikace používá standardní open-source knihovny Androidu (např. AndroidX, Jetpack Compose) v APK. Běží lokálně v zařízení a Darken je nepoužívá ke sběru dat.</string>
     <string name="privacy_section_contact_title">Kontakt a zdrojový kód</string>
     <string name="privacy_section_contact_body">Dotazy nebo připomínky k soukromí: diskus.barge163@simplelogin.com. Zdrojový kód: https://github.com/lokomaster1/darken</string>
+    <string name="custom_color_save_to_slot">Uložit vybranou barvu na pozici:</string>
+    <string name="custom_color_presets">Přednastavené barvy</string>
+    <string name="custom_color_save_slot">Uložit na pozici %1$d</string>
+    <string name="custom_color_reset_slots">Reset</string>
+    <string name="custom_color_slot_saved">Barva uložena na pozici %1$d</string>
+    <string name="custom_color_slots_reset">Výchozí barvy obnoveny</string>
+    <string name="palette_black">Černá</string>
+    <string name="palette_graphite">Grafit</string>
+    <string name="palette_coffee">Káva</string>
+    <string name="palette_burgundy">Vínová</string>
+    <string name="palette_terracotta">Terakota</string>
+    <string name="palette_honey">Medová</string>
+    <string name="palette_amber">Jantar</string>
+    <string name="palette_gold">Zlatá</string>
+    <string name="palette_chestnut">Kaštan</string>
+    <string name="palette_plum">Švestka</string>
+    <string name="palette_forest">Lesní</string>
+    <string name="palette_slate">Břidlice</string>
+    <string name="custom_color_select_slot">Vybrat pozici %1$d</string>
 </resources>

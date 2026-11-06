@@ -36,6 +36,14 @@ class PreferencesRepository(private val context: Context) {
 
     fun defaultDimLevelBlocking(): Int = runBlocking { resolveDefaultDimLevel() }
 
+    val colorFilterExpanded: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[KEY_COLOR_FILTER_EXPANDED] ?: false
+    }
+
+    suspend fun setColorFilterExpanded(expanded: Boolean) {
+        context.dataStore.edit { prefs -> prefs[KEY_COLOR_FILTER_EXPANDED] = expanded }
+    }
+
     val overlayTintPreset: Flow<String> = context.dataStore.data.map { prefs ->
         prefs[KEY_OVERLAY_TINT_PRESET] ?: OverlayTint.PRESET_GRAY
     }
@@ -44,16 +52,34 @@ class PreferencesRepository(private val context: Context) {
         prefs[KEY_CUSTOM_OVERLAY_TINT] ?: OverlayTint.AmberArgb
     }
 
-    val resolvedOverlayTintArgb: Flow<Int> = context.dataStore.data.map { prefs ->
-        resolveOverlayTintArgb(
-            prefs[KEY_OVERLAY_TINT_PRESET] ?: OverlayTint.PRESET_GRAY,
-            prefs[KEY_CUSTOM_OVERLAY_TINT] ?: OverlayTint.AmberArgb,
-        )
+    val savedOverlayTintPresets: Flow<Map<String, Int>> = context.dataStore.data.map { prefs ->
+        OVERLAY_TINT_SLOT_KEYS.mapNotNull { (preset, key) ->
+            prefs[key]?.let { preset to it }
+        }.toMap()
+    }
+
+    val resolvedOverlayTintArgb: Flow<Int> = context.dataStore.data.map(::resolveOverlayTintArgb)
+
+    suspend fun saveOverlayTintPreset(preset: String, argb: Int, previousCustomArgb: Int) {
+        val key = OVERLAY_TINT_SLOT_KEYS.getValue(preset)
+        context.dataStore.edit { prefs ->
+            prefs[key] = argb
+            prefs[KEY_CUSTOM_OVERLAY_TINT] = previousCustomArgb
+            prefs[KEY_OVERLAY_TINT_PRESET] = preset
+        }
+    }
+
+    suspend fun resetOverlayTintPresets() {
+        context.dataStore.edit { prefs ->
+            OVERLAY_TINT_SLOT_KEYS.values.forEach { prefs.remove(it) }
+            prefs.remove(KEY_CUSTOM_OVERLAY_TINT)
+            prefs[KEY_OVERLAY_TINT_PRESET] = OverlayTint.PRESET_GRAY
+        }
     }
 
     suspend fun setOverlayTintPreset(preset: String) {
         val normalized = when (preset) {
-            OverlayTint.PRESET_AMBER, OverlayTint.PRESET_RED, OverlayTint.PRESET_CUSTOM -> preset
+            OverlayTint.PRESET_GRAPHITE, OverlayTint.PRESET_BURGUNDY, OverlayTint.PRESET_CUSTOM -> preset
             else -> OverlayTint.PRESET_GRAY
         }
         context.dataStore.edit { prefs ->
@@ -71,7 +97,7 @@ class PreferencesRepository(private val context: Context) {
     suspend fun setOverlayTint(preset: String, customArgb: Int? = null) {
         context.dataStore.edit { prefs ->
             prefs[KEY_OVERLAY_TINT_PRESET] = when (preset) {
-                OverlayTint.PRESET_AMBER, OverlayTint.PRESET_RED, OverlayTint.PRESET_CUSTOM -> preset
+                OverlayTint.PRESET_GRAPHITE, OverlayTint.PRESET_BURGUNDY, OverlayTint.PRESET_CUSTOM -> preset
                 else -> OverlayTint.PRESET_GRAY
             }
             if (customArgb != null) {
@@ -81,15 +107,17 @@ class PreferencesRepository(private val context: Context) {
     }
 
     fun resolveOverlayTintArgbBlocking(): Int = runBlocking {
-        val prefs = context.dataStore.data.first()
-        resolveOverlayTintArgb(
-            prefs[KEY_OVERLAY_TINT_PRESET] ?: OverlayTint.PRESET_GRAY,
+        resolveOverlayTintArgb(context.dataStore.data.first())
+    }
+
+    private fun resolveOverlayTintArgb(prefs: Preferences): Int {
+        val preset = prefs[KEY_OVERLAY_TINT_PRESET] ?: OverlayTint.PRESET_GRAY
+        val savedArgb = OVERLAY_TINT_SLOT_KEYS[preset]?.let { prefs[it] }
+        return savedArgb ?: OverlayTint.resolveArgb(
+            preset,
             prefs[KEY_CUSTOM_OVERLAY_TINT] ?: OverlayTint.AmberArgb,
         )
     }
-
-    private fun resolveOverlayTintArgb(preset: String, customArgb: Int): Int =
-        OverlayTint.resolveArgb(preset, customArgb)
 
     val appLanguage: Flow<String> = context.dataStore.data.map { prefs ->
         prefs[KEY_LANGUAGE] ?: LANG_SYSTEM
@@ -162,8 +190,12 @@ class PreferencesRepository(private val context: Context) {
         private val KEY_LANGUAGE = stringPreferencesKey("app_language")
         private val KEY_NOTIFICATION_MODE = stringPreferencesKey("notification_mode")
         private val KEY_AUTO_START = booleanPreferencesKey("auto_start_on_launch")
+        private val KEY_COLOR_FILTER_EXPANDED = booleanPreferencesKey("color_filter_expanded")
         private val KEY_OVERLAY_TINT_PRESET = stringPreferencesKey("overlay_tint_preset")
         private val KEY_CUSTOM_OVERLAY_TINT = intPreferencesKey("custom_overlay_tint_argb")
+        private val OVERLAY_TINT_SLOT_KEYS = OverlayTint.presetSlots.associateWith { preset ->
+            intPreferencesKey("overlay_tint_slot_$preset")
+        }
         private val KEY_PRIVACY_ACK = booleanPreferencesKey("privacy_acknowledged")
     }
 }

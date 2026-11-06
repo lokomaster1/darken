@@ -110,4 +110,23 @@
 
     <string name="github_url" translatable="false">https://github.com/lokomaster1/darken</string>
     <string name="contact_email" translatable="false">diskus.barge163@simplelogin.com</string>
+    <string name="custom_color_save_to_slot">Save selected color to slot:</string>
+    <string name="custom_color_presets">Preset colors</string>
+    <string name="custom_color_save_slot">Save to slot %1$d</string>
+    <string name="custom_color_reset_slots">Reset</string>
+    <string name="custom_color_slot_saved">Color saved to slot %1$d</string>
+    <string name="custom_color_slots_reset">Default colors restored</string>
+    <string name="palette_black">Black</string>
+    <string name="palette_graphite">Graphite</string>
+    <string name="palette_coffee">Coffee</string>
+    <string name="palette_burgundy">Burgundy</string>
+    <string name="palette_terracotta">Terracotta</string>
+    <string name="palette_honey">Honey</string>
+    <string name="palette_amber">Amber</string>
+    <string name="palette_gold">Gold</string>
+    <string name="palette_chestnut">Chestnut</string>
+    <string name="palette_plum">Plum</string>
+    <string name="palette_forest">Forest</string>
+    <string name="palette_slate">Slate</string>
+    <string name="custom_color_select_slot">Select slot %1$d</string>
 </resources>

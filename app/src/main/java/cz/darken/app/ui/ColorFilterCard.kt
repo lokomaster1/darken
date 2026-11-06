@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cz.darken.app.R
 import cz.darken.app.overlay.OverlayTint
@@ -33,6 +34,7 @@ fun ColorFilterCard(
     onExpandedChange: (Boolean) -> Unit,
     tintPreset: String,
     resolvedTintArgb: Int,
+    savedTintPresets: Map<String, Int>,
     enabled: Boolean,
     onPresetSelected: (String) -> Unit,
     onCustomClick: () -> Unit,
@@ -86,39 +88,39 @@ fun ColorFilterCard(
             )
         }
         if (expanded) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.Top,
             ) {
-                PresetColorOption(
-                    argb = OverlayTint.GrayArgb,
-                    label = stringResource(R.string.tint_gray),
-                    selected = tintPreset == OverlayTint.PRESET_GRAY,
-                    enabled = enabled,
-                    onClick = { onPresetSelected(OverlayTint.PRESET_GRAY) },
+                val defaultLabels = listOf(
+                    R.string.tint_gray,
+                    R.string.palette_graphite,
+                    R.string.palette_burgundy,
                 )
-                PresetColorOption(
-                    argb = OverlayTint.AmberArgb,
-                    label = stringResource(R.string.tint_amber),
-                    selected = tintPreset == OverlayTint.PRESET_AMBER,
-                    enabled = enabled,
-                    onClick = { onPresetSelected(OverlayTint.PRESET_AMBER) },
-                )
-                PresetColorOption(
-                    argb = OverlayTint.RedArgb,
-                    label = stringResource(R.string.tint_red),
-                    selected = tintPreset == OverlayTint.PRESET_RED,
-                    enabled = enabled,
-                    onClick = { onPresetSelected(OverlayTint.PRESET_RED) },
-                )
+                OverlayTint.presetSlots.forEachIndexed { index, preset ->
+                    val savedArgb = savedTintPresets[preset]
+                    val labelRes = if (savedArgb == null) {
+                        defaultLabels[index]
+                    } else {
+                        filterColorPalette[savedArgb]
+                    }
+                    PresetColorOption(
+                        argb = savedArgb ?: OverlayTint.resolveArgb(preset, resolvedTintArgb),
+                        label = if (labelRes != null) stringResource(labelRes) else (index + 1).toString(),
+                        selected = tintPreset == preset,
+                        enabled = enabled,
+                        onClick = { onPresetSelected(preset) },
+                        modifier = Modifier.weight(1f),
+                    )
+                }
                 PresetColorOption(
                     argb = resolvedTintArgb,
                     label = stringResource(R.string.tint_custom),
                     selected = tintPreset == OverlayTint.PRESET_CUSTOM,
                     enabled = enabled,
                     onClick = onCustomClick,
+                    modifier = Modifier.weight(1f),
                     isCustom = true,
                 )
             }
@@ -133,9 +135,11 @@ private fun PresetColorOption(
     selected: Boolean,
     enabled: Boolean,
     onClick: () -> Unit,
+    modifier: Modifier,
     isCustom: Boolean = false,
 ) {
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -143,20 +147,21 @@ private fun PresetColorOption(
             RainbowSwatch(
                 selected = false,
                 onClick = { if (enabled) onClick() },
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(44.dp),
             )
         } else {
             ColorSwatch(
                 argb = argb,
                 selected = selected,
                 onClick = { if (enabled) onClick() },
-                modifier = Modifier.size(if (isCustom) 40.dp else 44.dp),
+                modifier = Modifier.size(44.dp),
             )
         }
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
             color = if (selected) DarkenPalette.Gold else DarkenPalette.TextMuted,
+            textAlign = TextAlign.Center,
         )
     }
 }

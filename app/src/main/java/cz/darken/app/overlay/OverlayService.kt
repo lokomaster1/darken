@@ -89,7 +89,10 @@ class OverlayService : Service() {
 
     override fun onDestroy() {
         cancelHighlightAnimation()
-        removeOverlay()
+        if (overlayView != null) {
+            removeOverlay()
+            notifyOverlayStopped()
+        }
         super.onDestroy()
     }
 
@@ -100,9 +103,13 @@ class OverlayService : Service() {
 
     private fun tearDown() {
         removeOverlay()
-        lastKnownDimLevel = null
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
+        notifyOverlayStopped()
+    }
+
+    private fun notifyOverlayStopped() {
+        lastKnownDimLevel = null
         OverlayUiSync.notifyOverlayStateChanged(this)
         MainActivityHolder.notifyOverlayStopped()
     }
@@ -125,7 +132,6 @@ class OverlayService : Service() {
 
     private fun showOverlay(dimLevel: Int) {
         currentDimLevel = dimLevel.coerceIn(PreferencesRepository.MIN_DIM, PreferencesRepository.MAX_DIM)
-        lastKnownDimLevel = currentDimLevel
 
         val wm = getSystemService<WindowManager>() ?: return
         windowManager = wm
@@ -151,6 +157,8 @@ class OverlayService : Service() {
 
         wm.addView(view, params)
         overlayView = view
+        lastKnownDimLevel = currentDimLevel
+        MainActivityHolder.notifyOverlayStarted(currentDimLevel)
         OverlayUiSync.notifyOverlayStateChanged(this)
     }
 

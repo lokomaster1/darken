@@ -6,36 +6,22 @@ import cz.darken.app.data.PreferencesRepository
 object OverlayTint {
 
     const val PRESET_GRAY = "gray"
-    const val PRESET_AMBER = "amber"
-    const val PRESET_RED = "red"
+    const val PRESET_GRAPHITE = "graphite"
+    const val PRESET_BURGUNDY = "burgundy"
     const val PRESET_CUSTOM = "custom"
 
+    val presetSlots = listOf(PRESET_GRAY, PRESET_GRAPHITE, PRESET_BURGUNDY)
+
     val GrayArgb: Int = 0xFF000000.toInt()
+    val GraphiteArgb: Int = 0xFF1A1A1A.toInt()
+    val BurgundyArgb: Int = 0xFF6B2020.toInt()
     /** Warm light brown (matches 4th swatch in custom palette). */
     val AmberArgb: Int = 0xFF4A3728.toInt()
     val RedArgb: Int = 0xFF8B3030.toInt()
 
-    /** Curated palette for the custom picker (ARGB). */
-    val customPalette: List<Int> = listOf(
-        0xFF000000.toInt(),
-        0xFF1A1A1A.toInt(),
-        0xFF2D2416.toInt(),
-        0xFF4A3728.toInt(),
-        0xFF6B2020.toInt(),
-        0xFF8B3030.toInt(),
-        0xFFB85030.toInt(),
-        0xFFD4A04A.toInt(),
-        0xFFE8A838.toInt(),
-        0xFFC9A227.toInt(),
-        0xFF5C4033.toInt(),
-        0xFF3D2B52.toInt(),
-        0xFF1E3A2F.toInt(),
-        0xFF2A3A4A.toInt(),
-    )
-
     fun resolveArgb(preset: String, customArgb: Int): Int = when (preset) {
-        PRESET_AMBER -> AmberArgb
-        PRESET_RED -> RedArgb
+        PRESET_GRAPHITE -> GraphiteArgb
+        PRESET_BURGUNDY -> BurgundyArgb
         PRESET_CUSTOM -> customArgb
         else -> GrayArgb
     }

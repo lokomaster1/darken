@@ -4,8 +4,9 @@ Download signed APKs from [GitHub Releases](https://github.com/lokomaster1/darke
 
 ## Published APKs
 
-The latest published version is **1.3.1**. See the [1.3.1 changelog](CHANGELOG.md#131).
+The latest published version is **1.3.2**. See the [1.3.2 changelog](CHANGELOG.md#132).
 
+- [v1.3.2](https://github.com/lokomaster1/darken/releases/tag/v1.3.2) — `darken-1.3.2.apk`, version code 17
 - [v1.3.1](https://github.com/lokomaster1/darken/releases/tag/v1.3.1) — `darken-1.3.1.apk`, version code 16
 - [v1.3.0](https://github.com/lokomaster1/darken/releases/tag/v1.3.0) — `darken-1.3.0.apk`, version code 15
 - [v1.2.7](https://github.com/lokomaster1/darken/releases/tag/v1.2.7) — `Darken-1.2.7.apk`, version code 14

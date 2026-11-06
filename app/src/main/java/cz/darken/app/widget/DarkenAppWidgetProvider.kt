@@ -7,8 +7,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.SizeF
 import android.util.TypedValue
 import android.widget.RemoteViews
+import androidx.core.os.BundleCompat
 import cz.darken.app.R
 import cz.darken.app.overlay.OverlayLauncher
 import kotlin.math.min
@@ -51,7 +53,10 @@ class DarkenAppWidgetProvider : AppWidgetProvider() {
     companion object {
         const val ACTION_TOGGLE = "cz.darken.app.widget.TOGGLE"
 
-        private const val ICON_MIN_DP = 20
+        // Launchers report available dimensions, not the widget's current grid span.
+        private const val COMPACT_WIDTH_LIMIT_DP = 130f
+        private const val COMPACT_HEIGHT_LIMIT_DP = 115f
+        private const val MAX_REMOTE_VIEWS_SIZES = 16
         private const val ICON_MAX_DP = 64
         /** Icon size as a fraction of the inner widget frame (scales when resized). */
         private const val ICON_CELL_RATIO = 0.96f
@@ -75,63 +80,66 @@ class DarkenAppWidgetProvider : AppWidgetProvider() {
             options: Bundle? = null,
         ) {
             val resolvedOptions = options ?: appWidgetManager.getAppWidgetOptions(appWidgetId)
-            appWidgetManager.updateAppWidget(
-                appWidgetId,
-                buildRemoteViews(context, appWidgetId, resolvedOptions),
-            )
+            val sizes = BundleCompat.getParcelableArrayList(
+                resolvedOptions,
+                AppWidgetManager.OPTION_APPWIDGET_SIZES,
+                SizeF::class.java,
+            ).orEmpty().filter { it.width > 0f && it.height > 0f }.distinct()
+            val active = OverlayLauncher.isOverlayActive(context)
+            val toggle = togglePendingIntent(context, appWidgetId)
+            val views = if (sizes.size in 1..MAX_REMOTE_VIEWS_SIZES) {
+                RemoteViews(sizes.associateWith { buildRemoteViews(context, it, active, toggle) })
+            } else {
+                buildRemoteViews(context, fallbackSize(context, resolvedOptions), active, toggle)
+            }
+            appWidgetManager.updateAppWidget(appWidgetId, views)
         }
 
         private fun buildRemoteViews(
             context: Context,
-            appWidgetId: Int,
-            options: Bundle,
+            size: SizeF,
+            active: Boolean,
+            toggle: PendingIntent,
         ): RemoteViews {
-            val active = OverlayLauncher.isOverlayActive(context)
             val views = RemoteViews(context.packageName, R.layout.widget_darken)
             views.setInt(
                 android.R.id.background,
                 "setBackgroundResource",
                 if (active) R.drawable.widget_background_active else R.drawable.widget_background_inactive,
             )
-            val iconSizeDp = iconSizeDpForOptions(context, options)
+            val density = context.resources.displayMetrics.density
+            val frameInsetDp = context.resources.getDimension(R.dimen.widget_cell_inset) / density
+            val innerPadDp = context.resources.getDimension(R.dimen.widget_inner_padding) / density
+            val frameSide = (min(size.width, size.height) - 2f * frameInsetDp).coerceAtLeast(1f)
+            if (size.width < COMPACT_WIDTH_LIMIT_DP && size.height < COMPACT_HEIGHT_LIMIT_DP) {
+                views.setViewLayoutWidth(android.R.id.background, frameSide, TypedValue.COMPLEX_UNIT_DIP)
+                views.setViewLayoutHeight(android.R.id.background, frameSide, TypedValue.COMPLEX_UNIT_DIP)
+            }
+            val iconSizeDp = ((frameSide - 2f * innerPadDp) * ICON_CELL_RATIO)
+                .coerceIn(1f, ICON_MAX_DP.toFloat())
             views.setViewLayoutWidth(
                 R.id.widget_icon,
-                iconSizeDp.toFloat(),
+                iconSizeDp,
                 TypedValue.COMPLEX_UNIT_DIP,
             )
             views.setViewLayoutHeight(
                 R.id.widget_icon,
-                iconSizeDp.toFloat(),
+                iconSizeDp,
                 TypedValue.COMPLEX_UNIT_DIP,
             )
-            views.setOnClickPendingIntent(R.id.widget_host, togglePendingIntent(context, appWidgetId))
+            views.setOnClickPendingIntent(R.id.widget_host, toggle)
             return views
         }
 
-        private fun iconSizeDpForOptions(context: Context, options: Bundle): Int {
-            val cellDp = widgetCellDp(context, options)
-            val frameInsetDp = context.resources.getDimension(R.dimen.widget_cell_inset) /
+        private fun fallbackSize(context: Context, options: Bundle): SizeF {
+            val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH).takeIf { it > 0 }
+            val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT).takeIf { it > 0 }
+            val minCellDp = context.resources.getDimension(R.dimen.widget_min_cell) /
                 context.resources.displayMetrics.density
-            val innerPadDp = context.resources.getDimension(R.dimen.widget_inner_padding) /
-                context.resources.displayMetrics.density
-            val innerFrameDp = (cellDp - 2f * frameInsetDp - 2f * innerPadDp).coerceAtLeast(16f)
-            return (innerFrameDp * ICON_CELL_RATIO).toInt().coerceIn(ICON_MIN_DP, ICON_MAX_DP)
-        }
-
-        private fun widgetCellDp(context: Context, options: Bundle): Float {
-            val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 0)
-            val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 0)
-            return when {
-                minWidth > 0 && minHeight > 0 -> min(minWidth, minHeight).toFloat()
-                minWidth > 0 -> minWidth.toFloat()
-                minHeight > 0 -> minHeight.toFloat()
-                else -> fallbackIconCellDp(context).toFloat()
-            }
-        }
-
-        private fun fallbackIconCellDp(context: Context): Int {
-            val minCellPx = context.resources.getDimensionPixelSize(R.dimen.widget_min_cell)
-            return (minCellPx / context.resources.displayMetrics.density).toInt()
+            return SizeF(
+                (minWidth ?: minHeight)?.toFloat() ?: minCellDp,
+                (minHeight ?: minWidth)?.toFloat() ?: minCellDp,
+            )
         }
 
         private fun togglePendingIntent(context: Context, appWidgetId: Int): PendingIntent {

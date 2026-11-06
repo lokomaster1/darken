@@ -1,0 +1,1 @@
+Save and reuse three filter color presets. The color picker keeps preset controls visible while typing. Improved Quick Settings and widget synchronization, remembered the filter color card state, and refined the home screen widget. An automated security review was followed by privacy and security improvements.
